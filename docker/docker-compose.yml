@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: medallion-db
+    env_file:
+      - ../.env
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  etl:
+    image: python:3.11-slim
+    container_name: medallion-etl
+    depends_on:
+      db:
+        condition: service_healthy
+    working_dir: /app
+    volumes:
+      - ..:/app
+    env_file:
+      - ../.env
+    command: bash -c "pip install --no-cache-dir -r requirements.txt && bash scripts/wait_for_db.sh && python silver/etl_raw_to_silver.py"
+
+volumes:
+  db_data:

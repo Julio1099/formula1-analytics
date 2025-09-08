@@ -1,0 +1,15 @@
+# Configurações do ETL (ajuste conforme seu dataset)
+# Se você tiver múltiplos CSVs, cada um será carregado em uma tabela silver <nome>_clean
+# Opções globais:
+delimiter: ","
+encoding: "utf-8"
+infer_datetime: true
+
+# Regras por arquivo (opcional). Use o nome do arquivo (sem extensão) como chave.
+# Exemplo:
+# files:
+#   vendas_2024:
+#     primary_key: "id_venda"
+#     parse_dates: ["data_venda"]
+#     delimiter: ";"
+files: {}
