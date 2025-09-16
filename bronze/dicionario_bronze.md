@@ -46,14 +46,14 @@
 | Nome       | Definição Lógica                                             | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:-----------|:-------------------------------------------------------------|:-----------------------|---------|:----------------------|
 | circuitId  | Identificador único do circuito                              | SERIAL                 | -       | PRIMARY KEY           |
-| circuitRef | Referência curta (slug) do circuito                          | CHAR                | 20       | NOT NULL              |
-| name       | Nome oficial do circuito                                     | CHAR                | 45       | NOT NULL              |
-| location   | Cidade/localidade do circuito                                | CHAR                | 20       | NOT NULL              |
-| country    | País onde o circuito está localizado                         | CHAR                | 15       | NOT NULL              |
+| circuitRef | Referência curta (slug) do circuito                          | VARCHAR                | -       | NOT NULL              |
+| name       | Nome oficial do circuito                                     | VARCHAR                | -       | NOT NULL              |
+| location   | Cidade/localidade do circuito                                | VARCHAR                | -       | NOT NULL              |
+| country    | País onde o circuito está localizado                         | VARCHAR                | -       | NOT NULL              |
 | lat        | Latitude geográfica                                          | FLOAT                  | -       | NOT NULL              |
 | lng        | Longitude geográfica                                         | FLOAT                  | -       | NOT NULL              |
 | alt        | Altitude em metros                                           | INTEGER                | -       | NULL                  |
-| url        | Link para a página do circuito (Wikipedia)                   | CHAR                | 150       | NOT NULL              |
+| url        | Link para a página do circuito (Wikipedia)                   | VARCHAR                | -       | NOT NULL              |
 
 ---
 
@@ -70,7 +70,7 @@
 | raceId               | Referência da corrida                                       | INTEGER                | -       | FOREIGN KEY, NOT NULL  |
 | constructorId        | Construtor que obteve o resultado                           | INTEGER                | -       | FOREIGN KEY, NOT NULL  |
 | points               | Pontos obtidos na corrida                                   | FLOAT                  | -       | NOT NULL               |
-| status               | Status do resultado (pode ser nulo)                         | CHAR                | 10       | NULL                   |
+| status               | Status do resultado (pode ser nulo)                         | VARCHAR                | -       | NULL                   |
 
 ---
 
@@ -88,7 +88,7 @@
 | constructorId         | Construtor relacionado                                     | INTEGER                | -       | FOREIGN KEY, NOT NULL |
 | points                | Pontos acumulados até a corrida                            | FLOAT                  | -       | NOT NULL              |
 | position              | Posição numérica no campeonato                             | INTEGER                | -       | NOT NULL              |
-| positionText          | Representação textual da posição                           | CHAR                | 5       | NOT NULL              |
+| positionText          | Representação textual da posição                           | VARCHAR                | -       | NOT NULL              |
 | wins                  | Número de vitórias acumuladas                              | INTEGER                | -       | NOT NULL              |
 
 ---
@@ -103,10 +103,10 @@
 | Nome          | Definição Lógica                               | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:--------------|:-----------------------------------------------|:-----------------------|---------|:----------------------|
 | constructorId | Identificador único do construtor              | SERIAL                 | -       | PRIMARY KEY           |
-| constructorRef| Referência curta (slug)                        | CHAR                | 20       | NOT NULL              |
-| name          | Nome oficial do construtor                     | CHAR                | 30       | NOT NULL              |
-| nationality   | Nacionalidade do construtor                    | CHAR                | 15       | NOT NULL              |
-| url           | Link para página do construtor (Wikipedia)     | CHAR                | 150       | NOT NULL              |
+| constructorRef| Referência curta (slug)                        | VARCHAR                | -       | NOT NULL              |
+| name          | Nome oficial do construtor                     | VARCHAR                | -       | NOT NULL              |
+| nationality   | Nacionalidade do construtor                    | VARCHAR                | -       | NOT NULL              |
+| url           | Link para página do construtor (Wikipedia)     | VARCHAR                | -       | NOT NULL              |
 
 ---
 
@@ -124,7 +124,7 @@
 | driverId         | Piloto relacionado                          | INTEGER                | -       | FOREIGN KEY, NOT NULL |
 | points           | Pontos acumulados                           | FLOAT                  | -       | NOT NULL              |
 | position         | Posição numérica                            | INTEGER                | -       | NOT NULL              |
-| positionText     | Representação textual da posição            | CHAR                | 5       | NOT NULL              |
+| positionText     | Representação textual da posição            | VARCHAR                | -       | NOT NULL              |
 | wins             | Número de vitórias acumuladas               | INTEGER                | -       | NOT NULL              |
 
 ---
@@ -139,14 +139,14 @@
 | Nome       | Definição Lógica                                   | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:-----------|:---------------------------------------------------|:-----------------------|---------|:----------------------|
 | driverId   | Identificador único do piloto                      | SERIAL                 | -       | PRIMARY KEY           |
-| driverRef  | Referência curta (slug)                            | CHAR                | 25       | NOT NULL              |
+| driverRef  | Referência curta (slug)                            | VARCHAR                | -       | NOT NULL              |
 | number     | Número do carro                                    | INTEGER                | -       | NULL                  |
-| code       | Código oficial do piloto (ex: HAM, ROS)            | CHAR                | 3       | NOT NULL              |
-| forename   | Primeiro nome do piloto                            | CHAR                | 20       | NOT NULL              |
-| surname    | Sobrenome do piloto                                | CHAR                | 20       | NOT NULL              |
+| code       | Código oficial do piloto (ex: HAM, ROS)            | VARCHAR                | 3       | NOT NULL              |
+| forename   | Primeiro nome do piloto                            | VARCHAR                | -       | NOT NULL              |
+| surname    | Sobrenome do piloto                                | VARCHAR                | -       | NOT NULL              |
 | dob        | Data de nascimento                                 | DATE                   | -       | NOT NULL              |
-| nationality| Nacionalidade do piloto                            | CHAR                | 20       | NOT NULL              |
-| url        | Página do piloto (Wikipedia)                       | CHAR                | 150       | NOT NULL              |
+| nationality| Nacionalidade do piloto                            | VARCHAR                | -       | NOT NULL              |
+| url        | Página do piloto (Wikipedia)                       | VARCHAR                | -       | NOT NULL              |
 
 ---
 
@@ -163,7 +163,7 @@
 | driverId    | Piloto que realizou a volta                     | INTEGER                | -       | FOREIGN KEY, NOT NULL |
 | lap         | Número da volta                                 | INTEGER                | -       | NOT NULL              |
 | position    | Posição do piloto nessa volta                   | INTEGER                | -       | NOT NULL              |
-| time        | Tempo da volta (formato `M:SS.mmm`)             | CHAR                | 20       | NOT NULL              |
+| time        | Tempo da volta (formato `M:SS.mmm`)             | VARCHAR                | -       | NOT NULL              |
 | milliseconds| Tempo da volta em milissegundos                 | INTEGER                | -       | NOT NULL              |
 
 ---
@@ -181,8 +181,8 @@
 | driverId    | Piloto que realizou o pit stop                  | INTEGER                | -       | FOREIGN KEY, NOT NULL |
 | stop        | Número sequencial da parada                     | INTEGER                | -       | NOT NULL              |
 | lap         | Volta em que ocorreu o pit stop                  | INTEGER                | -       | NOT NULL              |
-| time        | Hora do pit stop (HH:MM:SS)                     | CHAR                | 20       | NOT NULL              |
-| duration    | Duração da parada em segundos                   | DECIMAL(5,2)                | -       | NOT NULL              |
+| time        | Hora do pit stop (HH:MM:SS)                     | VARCHAR                | -       | NOT NULL              |
+| duration    | Duração da parada em segundos                   | VARCHAR                | -       | NOT NULL              |
 | milliseconds| Duração da parada em milissegundos              | INTEGER                | -       | NOT NULL              |
 
 ---
@@ -202,9 +202,9 @@
 | constructorId| Construtor relacionado                         | INTEGER                | -       | FOREIGN KEY, NOT NULL |
 | number      | Número do carro                                 | INTEGER                | -       | NOT NULL              |
 | position    | Posição de largada definida                     | INTEGER                | -       | NOT NULL              |
-| q1          | Tempo obtido na sessão Q1                       | CHAR                | 15       | NULL                  |
-| q2          | Tempo obtido na sessão Q2                       | CHAR                | 15       | NULL                  |
-| q3          | Tempo obtido na sessão Q3                       | CHAR                | 15       | NULL                  |
+| q1          | Tempo obtido na sessão Q1                       | VARCHAR                | -       | NULL                  |
+| q2          | Tempo obtido na sessão Q2                       | VARCHAR                | -       | NULL                  |
+| q3          | Tempo obtido na sessão Q3                       | VARCHAR                | -       | NULL                  |
 
 ---
 
@@ -221,10 +221,10 @@
 | year        | Ano da corrida                                  | INTEGER                | -       | NOT NULL              |
 | round       | Rodada da temporada                             | INTEGER                | -       | NOT NULL              |
 | circuitId   | Circuito associado                              | INTEGER                | -       | FOREIGN KEY, NOT NULL |
-| name        | Nome da corrida (GP)                            | CHAR                | 40       | NOT NULL              |
+| name        | Nome da corrida (GP)                            | VARCHAR                | -       | NOT NULL              |
 | date        | Data da corrida                                 | DATE                   | -       | NOT NULL              |
 | time        | Hora de início                                  | TIME                   | -       | NULL                  |
-| url         | Link Wikipedia                                  | CHAR                | 150       | NOT NULL              |
+| url         | Link Wikipedia                                  | VARCHAR                | -       | NOT NULL              |
 | fp1_date    | Data do treino livre 1                          | DATE                   | -       | NULL                  |
 | fp1_time    | Hora do treino livre 1                          | TIME                   | -       | NULL                  |
 | fp2_date    | Data do treino livre 2                          | DATE                   | -       | NULL                  |
@@ -254,15 +254,15 @@
 | number          | Número do carro                                 | INTEGER                | -       | NOT NULL              |
 | grid            | Posição de largada                              | INTEGER                | -       | NOT NULL              |
 | position        | Posição final numérica                          | INTEGER                | -       | NULL                  |
-| positionText    | Representação textual da posição                | CHAR                | 5       | NOT NULL              |
+| positionText    | Representação textual da posição                | VARCHAR                | -       | NOT NULL              |
 | positionOrder   | Ordem final (mesmo se DNF)                      | INTEGER                | -       | NOT NULL              |
 | points          | Pontos obtidos                                  | FLOAT                  | -       | NOT NULL              |
 | laps            | Voltas completadas                              | INTEGER                | -       | NOT NULL              |
-| time            | Tempo total ou diferença                        | CHAR                | 20       | NULL                  |
+| time            | Tempo total ou diferença                        | VARCHAR                | -       | NULL                  |
 | milliseconds    | Tempo total em milissegundos                    | INTEGER                | -       | NULL                  |
 | fastestLap      | Volta mais rápida                               | INTEGER                | -       | NULL                  |
 | rank            | Ranking da volta mais rápida                    | INTEGER                | -       | NULL                  |
-| fastestLapTime  | Tempo da volta mais rápida                      | CHAR                | 30       | NULL                  |
+| fastestLapTime  | Tempo da volta mais rápida                      | VARCHAR                | -       | NULL                  |
 | fastestLapSpeed | Velocidade média da volta mais rápida (km/h)    | FLOAT                  | -       | NULL                  |
 | statusId        | Status do piloto                                | INTEGER                | -       | FOREIGN KEY, NOT NULL |
 
@@ -278,7 +278,7 @@
 | Nome | Definição Lógica                     | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:-----|:-------------------------------------|:-----------------------|---------|:----------------------|
 | year | Ano da temporada                     | INTEGER                | -       | PRIMARY KEY           |
-| url  | Link para Wikipedia                  | CHAR                | 150       | NOT NULL              |
+| url  | Link para Wikipedia                  | VARCHAR                | -       | NOT NULL              |
 
 ---
 
@@ -298,14 +298,14 @@
 | number          | Número do carro                                 | INTEGER                | -       | NOT NULL              |
 | grid            | Posição de largada                              | INTEGER                | -       | NOT NULL              |
 | position        | Posição final                                   | INTEGER                | -       | NULL                  |
-| positionText    | Representação textual da posição                | CHAR                | 5       | NOT NULL              |
+| positionText    | Representação textual da posição                | VARCHAR                | -       | NOT NULL              |
 | positionOrder   | Ordem final (mesmo se DNF)                      | INTEGER                | -       | NOT NULL              |
 | points          | Pontos obtidos                                  | FLOAT                  | -       | NOT NULL              |
 | laps            | Voltas completadas                              | INTEGER                | -       | NOT NULL              |
-| time            | Tempo total ou diferença                        | CHAR                | 30       | NULL                  |
+| time            | Tempo total ou diferença                        | VARCHAR                | -       | NULL                  |
 | milliseconds    | Tempo total em milissegundos                    | INTEGER                | -       | NULL                  |
 | fastestLap      | Volta mais rápida                               | INTEGER                | -       | NULL                  |
-| fastestLapTime  | Tempo da volta mais rápida                      | CHAR                | 30       | NULL                  |
+| fastestLapTime  | Tempo da volta mais rápida                      | VARCHAR                | -       | NULL                  |
 | statusId        | Status do piloto                                | INTEGER                | -       | FOREIGN KEY, NOT NULL |
 
 ---
@@ -320,7 +320,7 @@
 | Nome     | Definição Lógica                       | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:---------|:---------------------------------------|:-----------------------|---------|:----------------------|
 | statusId | Identificador único do status          | SERIAL                 | -       | PRIMARY KEY           |
-| status   | Descrição textual do status (Finished, DNF, etc.) | CHAR | 15       | NOT NULL              |
+| status   | Descrição textual do status (Finished, DNF, etc.) | VARCHAR | -       | NOT NULL              |
 
 ---
 
@@ -335,4 +335,3 @@
 |    Data    | Versão |                 Descrição                 | Autores                                                                                                                                                                                                 |
 |:----------:|:------:|:-----------------------------------------:| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 16/09/2025 | `1.0`  |        Adição do dicionário de dados         | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn)
-| 16/09/2025 | `1.1`  |        Alteração varchar e char do dicionário de dados         | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn)
