@@ -1,48 +1,67 @@
-# PC1 Starter Kit — Arquitetura Medallion (Bronze/Silver/Gold)
+# 🏎️ Formula 1 Analytics — Data Lakehouse (Bronze/Silver/Gold)
 
-Este kit foi gerado em 2025-09-06 19:19 e serve como ponto de partida para o **Ponto de Controle 1 (PC1)**.
+Este projeto tem como objetivo **organizar, transformar e analisar dados da Fórmula 1** utilizando a arquitetura **Medallion** (Bronze → Silver → Gold).  
 
-## Como usar (resumo)
-1) **Crie o arquivo `.env`** a partir do `.env.example` com suas credenciais do Postgres.  
-2) Coloque seus arquivos CSV originais em `bronze/dados_originais/`.  
-3) (Opcional) Ajuste `silver/config.yml` para separador, encoding, PK etc.  
-4) Rode:  
-```bash
-cd docker
-docker-compose up --build
-```
-5) Verifique as tabelas criadas (ex.: `silver.*_clean`) e índices:
-```bash
-docker exec -it medallion-db psql -U $POSTGRES_USER -d $POSTGRES_DB -c "\dn+"
-docker exec -it medallion-db psql -U $POSTGRES_USER -d $POSTGRES_DB -c "\dt silver.*"
-```
-
-> **PC1 cobre**: Repositório Git, escolha de dados, documentação Bronze (dicionário + analytics), MER/DER/DLD/DDL Silver, ETL Raw→Silver, Lakehouse populada (com índice), banco containerizado e script Python rodando no `docker-compose up`.
+A proposta é criar uma base sólida para análises de desempenho de pilotos, construtores e corridas ao longo da história da Fórmula 1, usando **ETL em Python**, **Postgres** e **Docker**.
 
 ---
 
-## Estrutura do repositório
+## 🎯 Objetivos do projeto
+- Estruturar dados brutos de Fórmula 1 em camadas (Bronze, Silver e Gold).  
+- Criar modelos conceitual, lógico e físico para organizar as informações.  
+- Popular um banco de dados containerizado com tabelas otimizadas.  
+- Disponibilizar um ambiente pronto para exploração analítica e dashboards.  
+
+---
+
+## 🚀 Como usar
+1. **Configurar o ambiente**  
+   - Copie o `.env.example` para `.env` e ajuste as credenciais do Postgres.  
+
+2. **Carregar os dados**  
+   - Coloque seus arquivos CSV originais em `bronze/dados_originais/`  
+     (ex.: `corridas.csv`, `pilotos.csv`, `construtores.csv`, `voltas.csv`).  
+
+3. **Rodar a stack**  
+   ```bash
+   cd docker
+   docker-compose up --build
+   ```
+
+4. **Verificar o banco**  
+   ```bash
+   docker exec -it medallion-db psql -U $POSTGRES_USER -d $POSTGRES_DB -c "\dn+"
+   docker exec -it medallion-db psql -U $POSTGRES_USER -d $POSTGRES_DB -c "\dt silver.*"
+   ```
+
+5. **ETL automático**  
+   - O script `etl_raw_to_silver.py` transforma os dados de Bronze → Silver.  
+   - Índices são criados automaticamente (pela primeira coluna de cada tabela).  
+
+---
+
+## 📂 Estrutura do repositório
 ```
-pc1_starter_kit/
+formula1-analytics/
 ├─ bronze/
-│  ├─ dados_originais/              # Coloque seus CSVs aqui (Raw/Bronze)
-│  └─ dicionario_bronze.md          # Template do dicionário de dados (Bronze)
+│  ├─ dados_originais/              # CSVs brutos (dados da Fórmula 1)
+│  └─ dicionario_bronze.md          # Dicionário de dados (Bronze)
 ├─ silver/
 │  ├─ etl_raw_to_silver.py          # ETL genérico: Bronze → Silver (Postgres)
 │  ├─ config.yml                    # Configurações do ETL (separador, PK, encoding)
 │  └─ models/
-│     ├─ mer_silver.md              # MER (conceitual) - template (Mermaid)
-│     ├─ der_silver.md              # DER (lógico) - template
-│     ├─ dld_silver.md              # DLD (físico) - template
-│     └─ ddl_silver.sql             # DDL exemplo (Lakehouse)
-├─ gold/                            # (Reservado para PC futuros)
+│     ├─ mer_silver.md              # Modelo conceitual (MER)
+│     ├─ der_silver.md              # Modelo lógico (DER)
+│     ├─ dld_silver.md              # Modelo físico (DLD)
+│     └─ ddl_silver.sql             # DDL para criação de tabelas
+├─ gold/                            # Resultados analíticos e dashboards
 ├─ docs/
 │  ├─ bronze/
-│  │  └─ analytics_notebook_plan.md # Roteiro da análise exploratória
+│  │  └─ analytics_notebook_plan.md # Roteiro de análise exploratória
 │  └─ silver/
-│     └─ dicionario_silver.md       # Template dicionário (Silver)
+│     └─ dicionario_silver.md       # Dicionário de dados Silver
 ├─ scripts/
-│  └─ wait_for_db.sh                # Script simples para aguardar o Postgres
+│  └─ wait_for_db.sh                # Script para aguardar o Postgres
 ├─ docker/
 │  ├─ docker-compose.yml
 │  └─ initdb/
@@ -52,11 +71,23 @@ pc1_starter_kit/
 └─ README.md
 ```
 
-## Ordem sugerida de execução (PC1)
-1. **Git**: crie o repositório, suba esta estrutura.
-2. **Dados**: escolha o dataset e coloque os arquivos em `bronze/dados_originais/`.
-3. **Bronze docs**: preencha `bronze/dicionario_bronze.md`; use o roteiro em `docs/bronze/analytics_notebook_plan.md`.
-4. **Silver model**: edite os templates `silver/models/*` para refletir seu caso.
-5. **Docker**: configure `.env` e rode `docker-compose up`.
-6. **ETL**: o serviço `etl` irá ler os CSVs e popular `silver.<arquivo>_clean`.
-7. **Índices**: criados pelo ETL (id ou primeira coluna). Confirme com `\d` no psql.
+---
+
+## 📊 Possibilidades de análise
+- Evolução do desempenho de pilotos por temporada  
+- Comparação de equipes (construtores) ao longo dos anos  
+- Análise de voltas rápidas x posição final  
+- Ranking histórico de campeões  
+- Impacto de circuitos e condições de corrida no resultado  
+
+---
+
+## 🛠️ Tecnologias utilizadas
+- **Python** (ETL, manipulação de dados)  
+- **PostgreSQL** (armazenamento e Lakehouse)  
+- **Docker** (containerização)  
+- **Mermaid / SQL** (modelagem conceitual, lógica e física)  
+
+---
+
+✍️ Projeto de **engenharia e análise de dados** aplicado ao domínio da **Fórmula 1**.  
