@@ -1,0 +1,26 @@
+[project]
+name = "formula1-analytics"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "bolzanMGB",email = "obolzanmgb@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pyspark (>=4.0.1,<5.0.0)",
+    "pandas (>=2.3.3,<3.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "formula1_analytics", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "jupyterlab (>=4.4.9,<5.0.0)",
+    "ipykernel (>=6.30.1,<7.0.0)"
+]
