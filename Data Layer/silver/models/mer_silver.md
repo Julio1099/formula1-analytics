@@ -1,1 +1,0 @@
-# MER — Camada Silver
