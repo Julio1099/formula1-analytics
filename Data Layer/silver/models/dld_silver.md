@@ -21,7 +21,7 @@ As conexões entre as entidades indicam as dependências referenciais (PK/FK), d
 <p align="center"> Figura 1 - Diagrama DLD </p>
 
 <p align="center">
-  <img src="../../assets/DLDsilver.png" alt="DLD silver">
+  <img src="../assets/DLDsilver.png" alt="DLD silver">
 </p>
 
 <p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/bolzanMGB"> Othavio Bolzan </a></p>
