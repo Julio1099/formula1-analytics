@@ -1,6 +1,12 @@
+### Diagrama Lógico de Dados (DDL) — Fórmula 1
+
+## O que é?
+
+DDL é um subconjunto de SQL (Structured Query Language) usado para definir e gerenciar a estrutura de bancos de dados e suas tabelas. Com o DDL é possivel criar, modificar e excluir objetos no banco de dados.
+
+---
+
 ```sql
-
-
 -- TABELA: Race
 CREATE TABLE Race (
     id_corrida INT PRIMARY KEY,
@@ -72,3 +78,18 @@ CREATE TABLE Result (
     FOREIGN KEY (id_status) REFERENCES Status(id_status)
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
+```
+---
+
+## Histórico de versão
+
+</center>
+
+<div style="margin: 0 auto; width: fit-content;">
+
+
+|    Data    | Versão |                 Descrição                 | Autores                                                                                                                                                                                                 |
+|:----------:|:------:|:-----------------------------------------:| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 09/10/2025 | `1.0`  |        Criação do ddl para Fórmula 1          | [Fernando Gabriel](https://github.com/show-dawn)
+| 09/10/2025 | `1.1`  |      fix da documentação         | [Fernando Gabriel](https://github.com/show-dawn)
+| 09/10/2025 | `1.2`  |      fix historico de versão         | [Fernando Gabriel](https://github.com/show-dawn)
