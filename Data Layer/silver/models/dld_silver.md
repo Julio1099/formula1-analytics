@@ -1,3 +1,14 @@
+### Diagrama Lógico de Dados (DLD) — Fórmula 1
+
+## 1. Introdução
+
+O Diagrama Lógico de Dados (DLD) traduz o Modelo Entidade-Relacionamento para uma representação relacional pronta para implementação. Este DLD cobre o domínio das corridas de Fórmula 1, contemplando corridas, pilotos, equipes, tempos de volta (tabela fato), paradas em boxes e resultados individuais dos pilotos.
+
+---
+
+```sql
+BEGIN TRANSACTION;
+
 -- TABELA: Race
 CREATE TABLE Race (
     id_corrida INT PRIMARY KEY,
@@ -70,6 +81,11 @@ CREATE TABLE Result (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+COMMIT;
+
+```
+---
+
 ## Histórico de versão
 
 </center>
@@ -80,3 +96,4 @@ CREATE TABLE Result (
 |    Data    | Versão |                 Descrição                 | Autores                                                                                                                                                                                                 |
 |:----------:|:------:|:-----------------------------------------:| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 09/10/2025 | `1.0`  |        Criação do MER para Fórmula 1          | [Fernando Gabriel](https://github.com/show-dawn)
+| 09/10/2025 | `1.1`  |      fix da documentação         | [Fernando Gabriel](https://github.com/show-dawn)
