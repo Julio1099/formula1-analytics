@@ -1,4 +1,16 @@
-```sql
+/*
+===========================================================
+  Projeto: Fórmula 1 - Analytics
+  Arquivo: DDL.sql
+  Descrição: Criação do esquema e tabelas base de dados
+===========================================================
+  HISTÓRICO DE VERSÕES
+-----------------------------------------------------------
+  Versão | Data       | Autor           | Descrição
+-----------------------------------------------------------
+  1.0    | 09/10/2025 | Fernando C.     | Criação inicial das tabelas base
+===========================================================
+*/
 
 
 -- TABELA: Race

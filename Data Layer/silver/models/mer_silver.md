@@ -51,8 +51,8 @@ A Tabela 2 apresenta as entidades identificadas no modelo de dados, juntamente c
 | **Constructor** | <ins>id\_equipe</ins>, nome\_equipe |
 | **Status** | <ins>id\_status</ins>, descricao\_status |
 | **Lap\_Times\_Fact**| <ins><span style="text-decoration: underline; text-decoration-style: dotted;">id\_corrida</span></ins>, <ins><span style="text-decoration: underline; text-decoration-style: dotted;">id\_piloto</span></ins>, <ins>volta</ins>, posicao\_na\_volta, tempo\_volta\_ms |
-| **Pit\_Stops** | <ins><span style="text-decoration: underline; text-decoration-style: dotted;">id\_corrida</span></ins>, <ins><span style="text-decoration: underline; text-decoration-style: dotted;">id\_piloto</span></ins>, <ins>numero\_parada</ins>, duracao\_parada\_seg |
-| **Results** | <ins><span style="text-decoration: underline; text-decoration-style: dotted;">id\_corrida</span></ins>, <ins><span style="text-decoration: underline; text-decoration-style: dotted;">id\_piloto</span></ins>, <span style="text-decoration: underline; text-decoration-style: dotted;">id\_equipe</span>, <span style="text-decoration: underline; text-decoration-style: dotted;">id\_status</span> |
+| **Pit\_Stop** | <ins><span style="text-decoration: underline; text-decoration-style: dotted;">id\_corrida</span></ins>, <ins><span style="text-decoration: underline; text-decoration-style: dotted;">id\_piloto</span></ins>, <ins>numero\_parada</ins>, duracao\_parada\_seg |
+| **Result** | <ins><span style="text-decoration: underline; text-decoration-style: dotted;">id\_corrida</span></ins>, <ins><span style="text-decoration: underline; text-decoration-style: dotted;">id\_piloto</span></ins>, <span style="text-decoration: underline; text-decoration-style: dotted;">id\_equipe</span>, <span style="text-decoration: underline; text-decoration-style: dotted;">id\_status</span> |
 
 </div>
 
@@ -152,6 +152,6 @@ Finalmente, temos o Diagrama Conceitual que representa visualmente as entidades,
 |:----------:|:------:|:-----------------------------------------:| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 07/10/2025 | `1.0`  |        Criação do MER para Fórmula 1          | [Júlio Cesar](https://github.com/Julio1099)
 | 08/10/2025 | `1.1`  |      Padronização da documentação         | [Othavio Bolzan](https://github.com/bolzanMGB)
-| 09/10/2025 | `1.2`  |      Correções no MER         | [Othavio Bolzan](https://github.com/Julio1099)
+| 09/10/2025 | `1.2`  |      Correções no MER         | [Júlio Cezar](https://github.com/Julio1099)
 
 </div>

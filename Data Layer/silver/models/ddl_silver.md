@@ -1,41 +1,71 @@
-### Diagrama Lógico de Dados (DDL) — Fórmula 1
+#  Diagrama Lógico de Dados (DDL)
 
-## O que é?
+## 1. Introdução
 
-DDL é um subconjunto de SQL (Structured Query Language) usado para definir e gerenciar a estrutura de bancos de dados e suas tabelas. Com o DDL é possivel criar, modificar e excluir objetos no banco de dados.
+**DDL (Data Definition Language)** é um subconjunto da linguagem **SQL (Structured Query Language)** usado para **definir e gerenciar a estrutura** de bancos de dados relacionais.
+Com comandos DDL, é possível **criar, alterar e excluir** objetos no banco, como tabelas, índices, e restrições.
 
----
+Principais comandos:
 
+* `CREATE` — cria objetos no banco de dados.
+* `ALTER` — modifica objetos existentes.
+* `DROP` — remove objetos do banco de dados.
+
+
+## 2. Estrutura do Banco de Dados
+
+Abaixo estão as definições das tabelas criadas para o nosso **projeto Fórmula 1 Analytics**, com suas chaves primárias, estrangeiras e restrições de integridade.
+
+
+### 2.1 Tabela `Race`
+Armazena as informações das corridas de Fórmula 1.
 ```sql
--- TABELA: Race
 CREATE TABLE Race (
     id_corrida INT PRIMARY KEY,
     ano SMALLINT NOT NULL CHECK (ano >= 1950),
     rodada SMALLINT NOT NULL CHECK (rodada > 0),
     nome_corrida VARCHAR(100) NOT NULL
 );
+```
 
--- TABELA: Driver
+
+### 2.2 Tabela `Driver`
+Armazena os dados básicos dos pilotos.
+```sql
 CREATE TABLE Driver (
     id_piloto INT PRIMARY KEY,
     primeiro_nome_piloto VARCHAR(50) NOT NULL,
     sobrenome_piloto VARCHAR(50) NOT NULL,
     CONSTRAINT uq_driver_nome UNIQUE (primeiro_nome_piloto, sobrenome_piloto)
 );
+```
 
--- TABELA: Constructor
+
+### 2.3 Tabela `Constructor`
+Representa as equipes (construtores) que participam das corridas.
+```sql
 CREATE TABLE Constructor (
     id_equipe INT PRIMARY KEY,
     nome_equipe VARCHAR(100) NOT NULL UNIQUE
 );
+```
 
--- TABELA: Status
+
+
+### 2.4 Tabela `Status`
+Define o status final de um piloto em uma corrida (ex.: “Concluiu”, “Abandonou”, “Acidente”).
+
+```sql
 CREATE TABLE Status (
     id_status INT PRIMARY KEY,
     descricao_status VARCHAR(50) NOT NULL UNIQUE
 );
 
--- TABELA: Lap_Times_Fact
+```
+
+### 2.5 Tabela `Lap_Times_Fact`
+Armazena o tempo de cada volta dos pilotos em cada corrida.
+```sql
 CREATE TABLE Lap_Times_Fact (
     id_corrida INT NOT NULL,
     id_piloto INT NOT NULL,
@@ -48,8 +78,11 @@ CREATE TABLE Lap_Times_Fact (
     FOREIGN KEY (id_piloto) REFERENCES Driver(id_piloto)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
+```
 
--- TABELA: Pit_Stop
+### 2.6 Tabela `Pit_Stop`
+Registra as paradas nos boxes realizadas por cada piloto durante uma corrida.
+```sql
 CREATE TABLE Pit_Stop (
     id_corrida INT NOT NULL,
     id_piloto INT NOT NULL,
@@ -61,8 +94,15 @@ CREATE TABLE Pit_Stop (
     FOREIGN KEY (id_piloto) REFERENCES Driver(id_piloto)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
+```
 
--- TABELA: Result
+
+
+### 2.7 Tabela `Result`
+
+Armazena o resultado final dos pilotos em cada corrida.
+
+```sql
 CREATE TABLE Result (
     id_corrida INT NOT NULL,
     id_piloto INT NOT NULL,
@@ -79,7 +119,9 @@ CREATE TABLE Result (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 ```
----
+
+
+<center>
 
 ## Histórico de versão
 
@@ -88,8 +130,10 @@ CREATE TABLE Result (
 <div style="margin: 0 auto; width: fit-content;">
 
 
+
 |    Data    | Versão |                 Descrição                 | Autores                                                                                                                                                                                                 |
 |:----------:|:------:|:-----------------------------------------:| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 09/10/2025 | `1.0`  |        Criação do ddl para Fórmula 1          | [Fernando Gabriel](https://github.com/show-dawn)
-| 09/10/2025 | `1.1`  |      fix da documentação         | [Fernando Gabriel](https://github.com/show-dawn)
-| 09/10/2025 | `1.2`  |      fix historico de versão         | [Fernando Gabriel](https://github.com/show-dawn)
+| 09/10/2025 | `1.1`  |      Fix da documentação           | [Fernando Gabriel](https://github.com/show-dawn)
+| 09/10/2025 | `1.2`  |      Dix historico de versão       | [Fernando Gabriel](https://github.com/show-dawn)
+| 09/10/2025 | `1.3`  |      Padronização da documentação  | [Fernando Gabriel](https://github.com/show-dawn)
