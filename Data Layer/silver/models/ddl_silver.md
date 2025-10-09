@@ -121,19 +121,13 @@ CREATE TABLE Result (
 ```
 
 
-<center>
 
 ## Histórico de versão
 
-</center>
+|    Data    | Versão |                 Descrição                 |                   Autor                   |                   Revisor                  |
+|:----------:|:------:|:-----------------------------------------:|:-----------------------------------------:|:------------------------------------------:|
+| 09/10/2025 | `1.0`  |        Criação do DDL para Fórmula 1      | [Fernando Gabriel](https://github.com/show-dawn) | [Othavio Bolzan](https://github.com/bolzanMGB) |
+| 09/10/2025 | `1.1`  |      Fix da documentação                  | [Fernando Gabriel](https://github.com/show-dawn) | [Othavio Bolzan](https://github.com/bolzanMGB) |
+| 09/10/2025 | `1.2`  |      Fix histórico de versão              | [Fernando Gabriel](https://github.com/show-dawn) | [Othavio Bolzan](https://github.com/bolzanMGB) |
+| 09/10/2025 | `1.3`  |      Padronização da documentação         | [Fernando Gabriel](https://github.com/show-dawn) | [Othavio Bolzan](https://github.com/bolzanMGB) |
 
-<div style="margin: 0 auto; width: fit-content;">
-
-
-
-|    Data    | Versão |                 Descrição                 | Autores                                                                                                                                                                                                 |
-|:----------:|:------:|:-----------------------------------------:| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 09/10/2025 | `1.0`  |        Criação do ddl para Fórmula 1          | [Fernando Gabriel](https://github.com/show-dawn)
-| 09/10/2025 | `1.1`  |      Fix da documentação           | [Fernando Gabriel](https://github.com/show-dawn)
-| 09/10/2025 | `1.2`  |      Dix historico de versão       | [Fernando Gabriel](https://github.com/show-dawn)
-| 09/10/2025 | `1.3`  |      Padronização da documentação  | [Fernando Gabriel](https://github.com/show-dawn)

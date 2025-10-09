@@ -381,18 +381,11 @@ Esta tabela contém os diferentes status que um piloto pode ter no final de uma 
 
 
 
-<center>
-
 ## Histórico de versão
 
-</center>
+|    Data    | Versão |                 Descrição                 |                   Autor                   |                   Revisor                  |
+|:----------:|:------:|:-----------------------------------------:|:-----------------------------------------:|:------------------------------------------:|
+| 16/09/2025 | `1.0`  |        Adição do dicionário de dados      | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn) | [Othavio Bolzan](https://github.com/bolzanMGB) |
+| 16/09/2025 | `1.1`  |        Alteração varchar e char do dicionário de dados | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn) | [Othavio Bolzan](https://github.com/bolzanMGB) |
+| 08/10/2025 | `1.2`  |        Padronizando a documentação        | [Othavio Bolzan](https://github.com/bolzanMGB) | [Júlio Cesar](https://github.com/Julio1099) |
 
-<div style="margin: 0 auto; width: fit-content;">
-
-|    Data    | Versão |                 Descrição                 | Autores                                                                                                                                                                                                 |
-|:----------:|:------:|:-----------------------------------------:| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 16/09/2025 | `1.0`  |        Adição do dicionário de dados         | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn)
-| 16/09/2025 | `1.1`  |        Alteração varchar e char do dicionário de dados         | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn)
-| 08/10/2025 | `1.2`  |        Padronizando a documentação         | [Othavio Bolzan](https://github.com/bolzanMGB)
-
-</div>

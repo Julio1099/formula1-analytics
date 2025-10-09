@@ -139,19 +139,10 @@ Finalmente, temos o Diagrama Conceitual que representa visualmente as entidades,
 <p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/Julio1099"> Júlio Cesar </a></p>
 
 
-<center>
-
 ## Histórico de versão
+|    Data    | Versão |                 Descrição                 |                   Autor                   |                   Revisor                  |
+|:----------:|:------:|:-----------------------------------------:|:-----------------------------------------:|:------------------------------------------:|
+| 07/10/2025 | `1.0`  |        Criação do MER para Fórmula 1      | [Júlio Cesar](https://github.com/Julio1099) | [Othavio Bolzan](https://github.com/bolzanMGB) |
+| 08/10/2025 | `1.1`  |      Padronização da documentação         | [Othavio Bolzan](https://github.com/bolzanMGB) | [Júlio Cesar](https://github.com/Julio1099) |
+| 09/10/2025 | `1.2`  |      Correções no MER                     | [Júlio Cesar](https://github.com/Julio1099) | [Othavio Bolzan](https://github.com/bolzanMGB) |
 
-</center>
-
-<div style="margin: 0 auto; width: fit-content;">
-
-
-|    Data    | Versão |                 Descrição                 | Autores                                                                                                                                                                                                 |
-|:----------:|:------:|:-----------------------------------------:| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 07/10/2025 | `1.0`  |        Criação do MER para Fórmula 1          | [Júlio Cesar](https://github.com/Julio1099)
-| 08/10/2025 | `1.1`  |      Padronização da documentação         | [Othavio Bolzan](https://github.com/bolzanMGB)
-| 09/10/2025 | `1.2`  |      Correções no MER         | [Júlio Cezar](https://github.com/Julio1099)
-
-</div>
