@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:15
+    container_name: db_formula1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: formula1
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  populate:
+    build: .
+    container_name: populate_formula1
+    depends_on:
+      - db
+    volumes:
+      - ./Data_Layer/silver/dados_limpos:/dados
+
+volumes:
+  db_data:
