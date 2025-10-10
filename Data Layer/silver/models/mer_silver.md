@@ -139,10 +139,60 @@ Finalmente, temos o Diagrama Conceitual que representa visualmente as entidades,
 <p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/Julio1099"> Júlio Cesar </a></p>
 
 
+<p align="center"> Figura 1b - Diagrama MER (Cardinalidades corrigidas) </p>
+
+<div style="margin: 0 auto; width: fit-content;">
+
+```
+                    ┌─────────────┐
+                    │    Race     │
+                    │ (Corrida)   │
+                    └──────┬──────┘
+                           │
+            ┌──────────────┼──────────────┐
+            │              │              │
+            │(1,N)    (1,N)│         (0,N)│
+            │              │              │
+     ┌──────▼──────┐(1,1)  │(1,1)  ┌──────▼──────┐
+     │ Lap_Times   │       │       │  Pit_Stop   │
+     │    Fact     │       │       │             │
+     │  (FATO)     │       │       └──────┬──────┘
+     └──────┬──────┘       │              │
+            │              │              │(1,1)
+       (1,1)│              │(1,1)         │
+            │              │              │
+            │         ┌────▼────┐    (0,N)│
+            │         │ Result  │         │
+            │         │         │         │
+            │         └────┬────┘         │
+            │              │              │
+            │         (1,1)│              │
+            │              │              │
+            │    ┌─────────┼─────────┐    │
+            │    │         │         │    │
+       (0,N)│    │(1,1)    │(0,N)    │    │
+            │    │         │         │    │
+     ┌──────▼────▼───┐     │    ┌────▼────▼───────┐
+     │    Driver     │     │    │  Constructor    │
+     │   (Piloto)    │     │    │    (Equipe)     │
+     └───────────────┘     │    └─────────────────┘
+                           │
+                      (0,N)│
+                           │
+                    ┌──────▼──────┐
+                    │   Status    │
+                    │             │
+                    └─────────────┘
+```
+
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/kalebmacedo"> Kaleb Macedo </a></p>
+
+
 ## Histórico de versão
 |    Data    | Versão |                 Descrição                 |                   Autor                   |                   Revisor                  |
 |:----------:|:------:|:-----------------------------------------:|:-----------------------------------------:|:------------------------------------------:|
 | 07/10/2025 | `1.0`  |        Criação do MER para Fórmula 1      | [Júlio Cesar](https://github.com/Julio1099) | [Othavio Bolzan](https://github.com/bolzanMGB) |
 | 08/10/2025 | `1.1`  |      Padronização da documentação         | [Othavio Bolzan](https://github.com/bolzanMGB) | [Júlio Cesar](https://github.com/Julio1099) |
 | 09/10/2025 | `1.2`  |      Correções no MER                     | [Júlio Cesar](https://github.com/Julio1099) | [Othavio Bolzan](https://github.com/bolzanMGB) |
-
+| 09/10/2025 | `1.3`  |      Correções no diagrama do MER                     | [kalebmacedo](https://github.com/kalebmacedo) | [Othavio Bolzan](https://github.com/bolzanMGB) |
