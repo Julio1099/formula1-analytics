@@ -9,7 +9,7 @@ No contexto deste projeto, o DLD foi elaborado para o **Data Warehouse da Fórmu
 
 
 
-## 2. Diagrama Lógico de Dados
+## 2. Estrutura do Diagrama 
 
 O diagrama a seguir representa a estrutura lógica das tabelas do banco de dados, contendo as entidades principais, seus atributos com tipos de dados, e as relações de chave primária (PK) e chave estrangeira (FK).
 
@@ -32,5 +32,5 @@ As conexões entre as entidades indicam as dependências referenciais (PK/FK), d
 
 |  **Data**  | **Versão** |      **Descrição**     |                   **Autor**                   |                   **Revisor**                  |
 | :--------: | :--------: | :--------------------: | :-------------------------------------------: | :--------------------------------------------: |
-| 09/10/2025 |    `1.0`   | Criação do DLD inicial | [Othavio Bolzan](https://github.com/bolzanMGB) | |
+| 09/10/2025 |    `1.0`   | Criação do DLD inicial | [Othavio Bolzan](https://github.com/bolzanMGB) | [Júlio Cesar](https://github.com/Julio1099) |
 
