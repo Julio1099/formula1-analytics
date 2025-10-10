@@ -14,10 +14,10 @@ O diagrama a seguir representa o modelo conceitual de dados do sistema, descreve
 <p align="center"> Figura 1 - Diagrama Entidade-Relacionamento (DER) </p>
 
 <p align="center">
-  <img src="../assets/DERsilver.png" alt="DER silver">
+  <img src="../assets/der.png" alt="DER silver">
 </p>
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/bolzanMGB">Othavio Bolzan</a></p>
+<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/kalebmacedo">Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB">Othavio Bolzan</a></p>
 
 
 
@@ -26,7 +26,7 @@ O diagrama a seguir representa o modelo conceitual de dados do sistema, descreve
 |  **Data**  | **Versão** |      **Descrição**     |                    **Autor**                   | **Revisor** |
 | :--------: | :--------: | :--------------------: | :--------------------------------------------: | :---------: |
 | 09/10/2025 |    `1.0`   | Documentação DER | [Othavio Bolzan](https://github.com/bolzanMGB) |    [Kaleb Macedo](https://github.com/kalebmacedo)          |
-| 09/10/2025 |    `1.0`   | Criação do Diagrama DER | [Othavio Bolzan](https://github.com/bolzanMGB) e  [Kaleb Macedo](https://github.com/kalebmacedo)|            |
+| 09/10/2025 |    `1.1`   | Criação do Diagrama DER | [Othavio Bolzan](https://github.com/bolzanMGB) e  [Kaleb Macedo](https://github.com/kalebmacedo)|            |
 
 
 
