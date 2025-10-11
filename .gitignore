@@ -1,4 +1,19 @@
-# Ignorar pastas de dados
+# Ignora a pasta Data_Layer (underline)
 Data_Layer/
+
+# Ignora a pasta Data (com ou sem espaço)
 Data/
-.DS_Store
+Data\ Layer/
+
+# Ignora arquivos temporários do sistema
+*.DS_Store
+Thumbs.db
+
+# Ignora arquivos Python compilados
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignora pastas de logs
+*.log
