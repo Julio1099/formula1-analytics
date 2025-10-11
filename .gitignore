@@ -1,3 +1,4 @@
 # Ignorar pastas de dados
 Data_Layer/
 Data/
+.DS_Store
