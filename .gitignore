@@ -2,8 +2,7 @@
 Data_Layer/
 
 # Ignora a pasta Data (com ou sem espaço)
-Data/
-Data\ Layer/
+data/
 
 # Ignora arquivos temporários do sistema
 *.DS_Store
