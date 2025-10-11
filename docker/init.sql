@@ -1,19 +1,5 @@
-/*
-===========================================================
-  Projeto: Fórmula 1 - Analytics
-  Arquivo: DDL.sql
-  Descrição: Criação do esquema e tabelas base de dados
-===========================================================
-  HISTÓRICO DE VERSÕES
------------------------------------------------------------
-  Versão | Data       | Autor           | Descrição
------------------------------------------------------------
-  1.0    | 09/10/2025 | Fernando Gabriel     | Criação inicial das tabelas base
-===========================================================
-*/
+-- Tabelas Silver Formula 1
 
-
--- TABELA: Race
 CREATE TABLE Race (
     id_corrida INT PRIMARY KEY,
     ano SMALLINT NOT NULL CHECK (ano >= 1950),
@@ -21,7 +7,6 @@ CREATE TABLE Race (
     nome_corrida VARCHAR(100) NOT NULL
 );
 
--- TABELA: Driver
 CREATE TABLE Driver (
     id_piloto INT PRIMARY KEY,
     primeiro_nome_piloto VARCHAR(50) NOT NULL,
@@ -29,19 +14,16 @@ CREATE TABLE Driver (
     CONSTRAINT uq_driver_nome UNIQUE (primeiro_nome_piloto, sobrenome_piloto)
 );
 
--- TABELA: Constructor
 CREATE TABLE Constructor (
     id_equipe INT PRIMARY KEY,
     nome_equipe VARCHAR(100) NOT NULL UNIQUE
 );
 
--- TABELA: Status
 CREATE TABLE Status (
     id_status INT PRIMARY KEY,
     descricao_status VARCHAR(50) NOT NULL UNIQUE
 );
 
--- TABELA: Lap_Times_Fact
 CREATE TABLE Lap_Times_Fact (
     id_corrida INT NOT NULL,
     id_piloto INT NOT NULL,
@@ -55,7 +37,6 @@ CREATE TABLE Lap_Times_Fact (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- TABELA: Pit_Stop
 CREATE TABLE Pit_Stop (
     id_corrida INT NOT NULL,
     id_piloto INT NOT NULL,
@@ -68,7 +49,6 @@ CREATE TABLE Pit_Stop (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- TABELA: Result
 CREATE TABLE Result (
     id_corrida INT NOT NULL,
     id_piloto INT NOT NULL,
