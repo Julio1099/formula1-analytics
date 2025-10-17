@@ -4,6 +4,9 @@
 
 Este documento serve como a documentação para o dicionário de dados do sistema. Ele descreve cada elemento de dados utilizado pelo sistema, explicando o que são, onde estão armazenados e como se relacionam.
 
+
+<p align="center"> Tabela 1 - Dicionário silver </p>
+
 <div style="margin: 0 auto; width: fit-content;">
 
 ![alt text](assets\dd_silver.png)
