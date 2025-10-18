@@ -1,17 +1,11 @@
-# Dicionário de Dados
+# Dicionário de Dados Bronze
 
-</center>
+## 1. Introdução
 
----
+Este documento serve como a documentação para o dicionário de dados do sistema. Ele descreve cada elemento de dados utilizado pelo sistema, explicando o que são, onde estão armazenados e como se relacionam. Logo abaixo na Tabela 1 há uma lista das tabelas utilizadas.
 
-<center>
 
-# O que é?
-
-</center>
-
-> Este documento serve como a documentação para o dicionário de dados do sistema. Ele descreve cada elemento de dados
-> utilizado pelo sistema, explicando o que são, onde estão armazenados e como se relacionam.
+<p align="center"> Tabela 1 - Tabelas utilizadas</p>
 
 <div style="margin: 0 auto; width: fit-content;">
 
@@ -34,14 +28,17 @@
 
 </div>
 
----
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Circuits
 
-|                 |                                                                                                         |   
-|-----------------|---------------------------------------------------------------------------------------------------------| 
-| **Descrição**   | Armazena as informações dos circuitos onde as corridas acontecem.                                       |
-| **Observações** | Cada circuito é identificado de forma única por `circuitId`.                                            |  
+## 2. Tabela Circuits
+
+Essa tabela Armazena as informações dos circuitos onde as corridas acontecem, cada circuito é identificado de forma única por `circuitId`.     
+
+
+<p align="center"> Tabela 2 - Tabela Circuits</p>
+
+<div style="margin: 0 auto; width: fit-content;">
 
 | Nome       | Definição Lógica                                             | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:-----------|:-------------------------------------------------------------|:-----------------------|---------|:----------------------|
@@ -55,14 +52,19 @@
 | alt        | Altitude em metros                                           | INTEGER                | -       | NULL                  |
 | url        | Link para a página do circuito (Wikipedia)                   | CHAR                | 150       | NOT NULL              |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Constructor_Results
 
-|                 |                                                                                     |   
-|-----------------|-------------------------------------------------------------------------------------| 
-| **Descrição**   | Registra os resultados obtidos pelos construtores em cada corrida.                  |
-| **Observações** | Relaciona-se com [Races](#tabela-races) e [Constructors](#tabela-constructors).     |  
+
+## 3. Tabela Constructor_Results
+
+Essa tabela registra os resultados obtidos pelos construtores em cada corrida. Ela se relaciona com as tabelas [Races](#tabela-races) e [Constructors](#tabela-constructors). 
+
+
+
+<p align="center"> Tabela 3 - Constructor_Results</p>
+<div style="margin: 0 auto; width: fit-content;">
 
 | Nome                 | Definição Lógica                                            | Tipo e Formato de Dado | Tamanho | Restrições de Domínio  |
 |:---------------------|:------------------------------------------------------------|:-----------------------|---------|:-----------------------|
@@ -72,14 +74,19 @@
 | points               | Pontos obtidos na corrida                                   | FLOAT                  | -       | NOT NULL               |
 | status               | Status do resultado (pode ser nulo)                         | CHAR                | 10       | NULL                   |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Constructor_Standings
 
-|                 |                                                                                          |   
-|-----------------|------------------------------------------------------------------------------------------| 
-| **Descrição**   | Representa a classificação dos construtores em determinado momento da temporada.         |
-| **Observações** | Usa informações de [Races](#tabela-races) e [Constructors](#tabela-constructors).        |  
+
+## 4. Tabela Constructor_Standings
+
+Essa tabela representa a classificação dos construtores em determinado momento da temporada. Ela usa informações de [Races](#tabela-races) e [Constructors](#tabela-constructors).   
+
+<p align="center"> Tabela 4 - Constructor_Standings</p>
+<div style="margin: 0 auto; width: fit-content;">
+
+
 
 | Nome                  | Definição Lógica                                            | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:----------------------|:------------------------------------------------------------|:-----------------------|---------|:----------------------|
@@ -91,14 +98,17 @@
 | positionText          | Representação textual da posição                           | CHAR                | 5       | NOT NULL              |
 | wins                  | Número de vitórias acumuladas                              | INTEGER                | -       | NOT NULL              |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Constructors
 
-|                 |                                                                                  |   
-|-----------------|----------------------------------------------------------------------------------| 
-| **Descrição**   | Contém os dados principais dos construtores de Fórmula 1.                        |
-| **Observações** | Relaciona-se com diversas tabelas de resultados e classificações.                |  
+
+## 5. Tabela Constructors
+
+Essa tabela contém os dados principais dos construtores de Fórmula 1. Ela se relaciona com diversas tabelas de resultados e classificações.   
+
+<p align="center"> Tabela 5 - Constructors </p>
+<div style="margin: 0 auto; width: fit-content;">        
 
 | Nome          | Definição Lógica                               | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:--------------|:-----------------------------------------------|:-----------------------|---------|:----------------------|
@@ -108,14 +118,18 @@
 | nationality   | Nacionalidade do construtor                    | CHAR                | 15       | NOT NULL              |
 | url           | Link para página do construtor (Wikipedia)     | CHAR                | 150       | NOT NULL              |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Driver_Standings
 
-|                 |                                                                                  |   
-|-----------------|----------------------------------------------------------------------------------| 
-| **Descrição**   | Representa a classificação dos pilotos em determinado ponto da temporada.        |
-| **Observações** | Usa informações de [Races](#tabela-races) e [Drivers](#tabela-drivers).          |  
+
+## 6. Tabela Driver_Standings
+
+
+Essa tabela representa a classificação dos pilotos em determinado ponto da temporada. Ela usa informações de [Races](#tabela-races) e [Drivers](#tabela-drivers).          
+<p align="center"> Tabela 6 - Driver_Standings </p>
+<div style="margin: 0 auto; width: fit-content;">
+
 
 | Nome             | Definição Lógica                             | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:-----------------|:---------------------------------------------|:-----------------------|---------|:----------------------|
@@ -127,14 +141,18 @@
 | positionText     | Representação textual da posição            | CHAR                | 5       | NOT NULL              |
 | wins             | Número de vitórias acumuladas               | INTEGER                | -       | NOT NULL              |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Drivers
 
-|                 |                                                                           |   
-|-----------------|---------------------------------------------------------------------------| 
-| **Descrição**   | Contém as informações pessoais e de carreira dos pilotos.                 |
-| **Observações** | Cada piloto é identificado de forma única por `driverId`.                 |  
+## 7. Tabela Drivers
+
+
+Essa tabela Contém as informações pessoais e de carreira dos pilotos.Cada piloto é identificado de forma única por `driverId`.                 
+
+<p align="center"> Tabela 7 - Drivers </p>
+
+<div style="margin: 0 auto; width: fit-content;">
 
 | Nome       | Definição Lógica                                   | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:-----------|:---------------------------------------------------|:-----------------------|---------|:----------------------|
@@ -148,14 +166,18 @@
 | nationality| Nacionalidade do piloto                            | CHAR                | 20       | NOT NULL              |
 | url        | Página do piloto (Wikipedia)                       | CHAR                | 150       | NOT NULL              |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Lap_Times
 
-|                 |                                                                                   |   
-|-----------------|-----------------------------------------------------------------------------------| 
-| **Descrição**   | Armazena os tempos de cada volta de cada piloto em determinada corrida.            |
-| **Observações** | Relaciona-se com [Races](#tabela-races) e [Drivers](#tabela-drivers).             |  
+
+## 8. Tabela Lap_Times
+
+
+Essa tabela armazena os tempos de cada volta de cada piloto em determinada corrida. Ela se relaciona [Races](#tabela-races) e [Drivers](#tabela-drivers).   
+
+<p align="center"> Tabela 8 - Lap_Times </p> 
+<div style="margin: 0 auto; width: fit-content;">
 
 | Nome        | Definição Lógica                                | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:------------|:------------------------------------------------|:-----------------------|---------|:----------------------|
@@ -166,14 +188,20 @@
 | time        | Tempo da volta (formato `M:SS.mmm`)             | CHAR                | 20       | NOT NULL              |
 | milliseconds| Tempo da volta em milissegundos                 | INTEGER                | -       | NOT NULL              |
 
----
+</div>
 
-# Tabela Pit_Stops
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-|                 |                                                                                   |   
-|-----------------|-----------------------------------------------------------------------------------| 
-| **Descrição**   | Registra as paradas de pit stop realizadas pelos pilotos durante a corrida.       |
-| **Observações** | Relaciona-se com [Races](#tabela-races) e [Drivers](#tabela-drivers).             |  
+
+
+## 9. Tabela Pit_Stops
+
+
+
+Essa tabela registra as paradas de pit stop realizadas pelos pilotos durante a corrida.   Ela se relaciona com [Races](#tabela-races) e [Drivers](#tabela-drivers).              
+<p align="center"> Tabela 9 - Pit_Stops </p>
+
+<div style="margin: 0 auto; width: fit-content;">
 
 | Nome        | Definição Lógica                                | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:------------|:------------------------------------------------|:-----------------------|---------|:----------------------|
@@ -185,14 +213,19 @@
 | duration    | Duração da parada em segundos                   | DECIMAL(5,2)                | -       | NOT NULL              |
 | milliseconds| Duração da parada em milissegundos              | INTEGER                | -       | NOT NULL              |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Qualifying
 
-|                 |                                                                                   |   
-|-----------------|-----------------------------------------------------------------------------------| 
-| **Descrição**   | Armazena os resultados das sessões de qualificação.                               |
-| **Observações** | Relaciona-se com [Races](#tabela-races), [Drivers](#tabela-drivers) e [Constructors](#tabela-constructors). |  
+
+## 10. Tabela Qualifying
+
+
+Essa tabela armazena os resultados das sessões de qualificação.  Ela se relaciona com [Races](#tabela-races), [Drivers](#tabela-drivers) e [Constructors](#tabela-constructors). 
+
+<p align="center"> Tabela 10 - Qualifying </p>
+
+<div style="margin: 0 auto; width: fit-content;">
 
 | Nome        | Definição Lógica                                | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:------------|:------------------------------------------------|:-----------------------|---------|:----------------------|
@@ -206,14 +239,19 @@
 | q2          | Tempo obtido na sessão Q2                       | CHAR                | 15       | NULL                  |
 | q3          | Tempo obtido na sessão Q3                       | CHAR                | 15       | NULL                  |
 
----
+</div>
 
-# Tabela Races
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-|                 |                                                                                   |   
-|-----------------|-----------------------------------------------------------------------------------| 
-| **Descrição**   | Armazena as informações principais das corridas de Fórmula 1.                     |
-| **Observações** | Relaciona-se com [Circuits](#tabela-circuits) e diversas tabelas de resultados.   |  
+
+
+## 11. Tabela Races
+
+Essa tabela armazena as informações principais das corridas de Fórmula 1.  Ela se relaciona com [Circuits](#tabela-circuits) e diversas tabelas de resultados.  
+
+<p align="center"> Tabela 11 - Races </p>
+
+<div style="margin: 0 auto; width: fit-content;">
 
 | Nome        | Definição Lógica                                | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:------------|:------------------------------------------------|:-----------------------|---------|:----------------------|
@@ -236,14 +274,18 @@
 | sprint_date | Data da corrida sprint                          | DATE                   | -       | NULL                  |
 | sprint_time | Hora da corrida sprint                          | TIME                   | -       | NULL                  |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Results
 
-|                 |                                                                                   |   
-|-----------------|-----------------------------------------------------------------------------------| 
-| **Descrição**   | Armazena os resultados das corridas (classificação final, pontos, voltas, etc.).  |
-| **Observações** | Relaciona-se com [Races](#tabela-races), [Drivers](#tabela-drivers), [Constructors](#tabela-constructors) e [Status](#tabela-status). |  
+
+## 12. Tabela Results
+
+Essa tabela armazena os resultados das corridas (classificação final, pontos, voltas, etc.). Ela se relaciona com [Races](#tabela-races), [Drivers](#tabela-drivers), [Constructors](#tabela-constructors) e [Status](#tabela-status). 
+
+<p align="center"> Tabela 12 - Results </p>
+
+<div style="margin: 0 auto; width: fit-content;">
 
 | Nome            | Definição Lógica                                | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:----------------|:------------------------------------------------|:-----------------------|---------|:----------------------|
@@ -266,28 +308,36 @@
 | fastestLapSpeed | Velocidade média da volta mais rápida (km/h)    | FLOAT                  | -       | NULL                  |
 | statusId        | Status do piloto                                | INTEGER                | -       | FOREIGN KEY, NOT NULL |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Seasons
 
-|                 |                                                                                   |   
-|-----------------|-----------------------------------------------------------------------------------| 
-| **Descrição**   | Representa as temporadas de Fórmula 1.                                            |
-| **Observações** | Cada temporada é identificada pelo ano.                                           |  
+
+## 13. Tabela Seasons
+
+Essa tabela representa as temporadas de Fórmula 1, nela cada temporada é identificada pelo ano. 
+
+<p align="center"> Tabela 13 - Seasons </p>
+
+<div style="margin: 0 auto; width: fit-content;">
 
 | Nome | Definição Lógica                     | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:-----|:-------------------------------------|:-----------------------|---------|:----------------------|
 | year | Ano da temporada                     | INTEGER                | -       | PRIMARY KEY           |
 | url  | Link para Wikipedia                  | CHAR                | 150       | NOT NULL              |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Sprint_Results
 
-|                 |                                                                                   |   
-|-----------------|-----------------------------------------------------------------------------------| 
-| **Descrição**   | Armazena os resultados das corridas sprint.                                       |
-| **Observações** | Relaciona-se com [Races](#tabela-races), [Drivers](#tabela-drivers), [Constructors](#tabela-constructors) e [Status](#tabela-status). |  
+
+## 14. Tabela Sprint_Results
+
+Essa tabela armazena os resultados das corridas sprint. Ela se relaciona com [Races](#tabela-races), [Drivers](#tabela-drivers), [Constructors](#tabela-constructors) e [Status](#tabela-status).
+
+<p align="center"> Tabela 14 - Sprint_Results </p>
+
+<div style="margin: 0 auto; width: fit-content;">
 
 | Nome            | Definição Lógica                                | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:----------------|:------------------------------------------------|:-----------------------|---------|:----------------------|
@@ -308,31 +358,34 @@
 | fastestLapTime  | Tempo da volta mais rápida                      | CHAR                | 30       | NULL                  |
 | statusId        | Status do piloto                                | INTEGER                | -       | FOREIGN KEY, NOT NULL |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-# Tabela Status
 
-|                 |                                                                                   |   
-|-----------------|-----------------------------------------------------------------------------------| 
-| **Descrição**   | Contém os diferentes status que um piloto pode ter no final de uma corrida.       |
-| **Observações** | Relaciona-se com [Results](#tabela-results) e [Sprint_Results](#tabela-sprint_results). |  
+
+## 15. Tabela Status
+
+Esta tabela contém os diferentes status que um piloto pode ter no final de uma corrida. Ela se relaciona com [Results](#tabela-results) e [Sprint_Results](#tabela-sprint_results). 
+
+<p align="center"> Tabela 15 - Status </p>
+
+<div style="margin: 0 auto; width: fit-content;">
 
 | Nome     | Definição Lógica                       | Tipo e Formato de Dado | Tamanho | Restrições de Domínio |
 |:---------|:---------------------------------------|:-----------------------|---------|:----------------------|
 | statusId | Identificador único do status          | SERIAL                 | -       | PRIMARY KEY           |
 | status   | Descrição textual do status (Finished, DNF, etc.) | CHAR | 15       | NOT NULL              |
 
----
+</div>
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
-<center>
 
-# Histórico de versão
 
-</center>
+## Histórico de versão
 
-<div style="margin: 0 auto; width: fit-content;">
+|    Data    | Versão |                 Descrição                 |                   Autor                   |                   Revisor                  |
+|:----------:|:------:|:-----------------------------------------:|:-----------------------------------------:|:------------------------------------------:|
+| 16/09/2025 | `1.0`  |        Adição do dicionário de dados      | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn) | [Othavio Bolzan](https://github.com/bolzanMGB) |
+| 16/09/2025 | `1.1`  |        Alteração varchar e char do dicionário de dados | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn) | [Othavio Bolzan](https://github.com/bolzanMGB) |
+| 08/10/2025 | `1.2`  |        Padronizando a documentação        | [Othavio Bolzan](https://github.com/bolzanMGB) | [Júlio Cesar](https://github.com/Julio1099) |
 
-|    Data    | Versão |                 Descrição                 | Autores                                                                                                                                                                                                 |
-|:----------:|:------:|:-----------------------------------------:| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 16/09/2025 | `1.0`  |        Adição do dicionário de dados         | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn)
-| 16/09/2025 | `1.1`  |        Alteração varchar e char do dicionário de dados         | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn)
