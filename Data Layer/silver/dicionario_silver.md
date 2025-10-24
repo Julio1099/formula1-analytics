@@ -6,7 +6,7 @@ Este documento serve como a documentação para o dicionário de dados do sistem
 
 <div style="margin: 0 auto; width: fit-content;">
 
-![alt text](Data Layer/silver/assets/dd_silver.jpeg)
+![alt text](assets\dd_silver.jpeg)
 
 </div>
 
