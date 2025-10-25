@@ -26,26 +26,6 @@ A entidade `ResultadosCorridas` agrupa, em cada linha, o contexto completo de de
 | `nome_equipe` | Nome da equipe/construtora. |
 | `descricao_status` | Descrição textual do status final. |
 
-> **Observação:** não há chaves estrangeiras, e a entidade não define uma chave primária física. A unicidade pode ser tratada a partir do trio {`id_corrida`, `id_piloto`, `volta`} quando relevante, porém a ausência de restrição facilita a ingestão de registros sem volta informada.
-
-## 3. Representação Conceitual
-
-A figura abaixo ilustra o MER reduzido para a tabela única.
-
-```
-+--------------------------------------------------------------+
-|                    ResultadosCorridas                        |
-|--------------------------------------------------------------|
-| id_corrida, ano, rodada, nome_corrida                        |
-| id_piloto, primeiro_nome_piloto, sobrenome_piloto            |
-| id_equipe, nome_equipe                                       |
-| id_status, descricao_status                                  |
-| volta, posicao_na_volta, tempo_volta_ms, duracao_parada_seg  |
-+--------------------------------------------------------------+
-```
-
-Não existem relacionamentos a serem representados, apenas os atributos que compõem a entidade da camada Silver.
-
 ## Histórico de versão
 |    Data    | Versão |                 Descrição                 |                   Autor                   |                   Revisor                  |
 |:----------:|:------:|:-----------------------------------------:|:-----------------------------------------:|:------------------------------------------:|
