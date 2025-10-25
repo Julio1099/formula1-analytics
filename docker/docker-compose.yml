@@ -38,9 +38,7 @@ services:
         export PGPASSWORD=$$DB_PASSWORD 
         export PGDATABASE=$$DB_NAME;
         
-        # --- ESTA É A LINHA CORRIGIDA ---
         until psql -c 'SELECT 1'; do
-        # -------------------------------
           >&2 echo 'Postgres indisponível - aguardando 1s';
           sleep 1;
         done;
