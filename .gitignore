@@ -16,3 +16,5 @@ __pycache__/
 
 # Ignora pastas de logs
 *.log
+
+.env

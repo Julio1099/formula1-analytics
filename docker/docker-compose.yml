@@ -1,37 +1,66 @@
-version: '3.8'
-
 services:
   db:
-    image: postgres:15
-    container_name: db_formula1
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: formula1
+    image: postgres:13
+    container_name: f1_postgres_db
+    restart: always
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_USER: f1user
+      POSTGRES_PASSWORD: "1234"
+      POSTGRES_DB: f1database
     volumes:
-      - db_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql   
+      - pgdata:/var/lib/postgresql/data
+
+  spark-etl:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    container_name: f1_etl_job
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: f1user
+      DB_PASSWORD: "1234"
+      DB_NAME: f1database
+      DB_PORT: 5432
+    volumes:
+      - ../Data Layer/raw/dados_originais:/home/jovyan/work/data
+      - ../Data Layer/silver/ddl_silver.sql:/home/jovyan/work/ddl_silver.sql
+
+    command: >
+      sh -c "
+        echo 'Aguardando o Postgres iniciar...';
+        
+        export PGHOST=$$DB_HOST 
+        export PGUSER=$$DB_USER 
+        export PGPASSWORD=$$DB_PASSWORD 
+        export PGDATABASE=$$DB_NAME;
+        
+        until psql -c 'SELECT 1'; do
+          >&2 echo 'Postgres indisponível - aguardando 1s';
+          sleep 1;
+        done;
+        
+        >&2 echo 'Postgres pronto! Executando DDL (ddl_silver.sql)...';
+        psql -f ddl_silver.sql;
+        
+        >&2 echo 'DDL executado. Iniciando o job ETL (notebook)...';
+        jupyter nbconvert --to script etl_raw_to_silver.ipynb && spark-submit etl_raw_to_silver.py
+      "
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin_formula1
+    container_name: f1_pgadmin
+    restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
     ports:
-      - "8080:80"
+      - "5050:80"
     depends_on:
       - db
-
-  populate:
-    build: .
-    container_name: populate_formula1
-    depends_on:
-      - db
-    volumes:
-      - ../Data_Layer/silver/dados_limpos:/dados
 
 volumes:
-  db_data:
+  pgdata:

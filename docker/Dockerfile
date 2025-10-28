@@ -1,21 +1,17 @@
-# Use Debian como base para ter apt-get disponível
-FROM debian:bullseye
+FROM jupyter/pyspark-notebook:latest
 
-# Instalar Java 17, Python 3 e utilitários
-RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk python3 python3-pip wget curl && \
-    rm -rf /var/lib/apt/lists/*
+USER root
 
-# Configurar JAVA_HOME para PySpark
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH=$JAVA_HOME/bin:$PATH
+# Instala psycopg2, wget E o postgresql-client
+RUN pip install psycopg2-binary && \
+    apt-get update && apt-get install -y wget postgresql-client
 
-# Instalar bibliotecas Python
-RUN pip3 install --no-cache-dir pyspark psycopg2-binary
+# Baixa o driver JDBC do PostgreSQL
+RUN wget https://jdbc.postgresql.org/download/postgresql-42.3.1.jar -P /usr/local/spark/jars/
 
-# Diretório de trabalho
-WORKDIR /app
-COPY populate.py /app/populate.py
+# Volta para o usuário padrão
+USER jovyan
+WORKDIR /home/jovyan/work
 
-# Comando default
-CMD ["python3", "populate.py"]
+# Copia o notebook
+COPY Transformer/etl_raw_to_silver.ipynb .
