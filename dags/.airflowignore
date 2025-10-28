@@ -1,0 +1,3 @@
+# Ignorar pastas de logs e dados do postgres que possam aparecer aqui
+logs
+pg_airflow_data

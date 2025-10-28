@@ -1,0 +1,16 @@
+# Usamos a imagem oficial como base
+FROM apache/airflow:2.8.1-python3.11
+
+# Mudamos para root SÓ para instalar coisas
+USER root
+
+# Instalamos o cliente do Docker (o "telefone") e o cliente do Postgres (a "chave")
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    docker.io \
+    postgresql-client && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Voltamos para o usuário padrão do Airflow
+USER airflow

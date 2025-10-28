@@ -1,0 +1,87 @@
+% Este é o arquivo fonte LaTeX para gerar o PDF dos Minemônicos do Projeto de Data Warehouse F1.
+
+% --- UNIVERSAL PREAMBLE BLOCK ---
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2cm, right=2cm]{geometry}
+\usepackage{fontspec}
+
+% Configuração para Português (Portugal)
+\usepackage[portuguese, bidi=basic, provide=*]{babel}
+
+\babelprovide[import, onchar=ids fonts]{portuguese}
+\babelprovide[import, onchar=ids fonts]{english}
+
+% Definindo a fonte principal como Noto Sans
+\babelfont{rm}{Noto Sans}
+
+% Adiciona pacotes para melhor controle de listas
+\usepackage{enumitem}
+\setlist[itemize]{label=-}
+
+% Pacote recomendado para tabelas
+\usepackage{booktabs}
+
+% Pacote de hiperligações (sempre o último)
+\usepackage{hyperref}
+% --- FIM UNIVERSAL PREAMBLE BLOCK ---
+
+\title{Minemônicos do Projeto Data Warehouse F1}
+\author{Resumo da Arquitetura do Pipeline de Dados}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+Este documento apresenta um resumo mnemônico dos principais pilares do projeto de Data Warehouse de Fórmula 1, seguindo o padrão Lakehouse/Medalhões (Bronze, Prata e Gold). O foco é nas finalidades, desafios e artefatos SQL de cada camada.
+\end{abstract}
+
+\vspace{1cm}
+
+\section{Pilar 1: Camada Bronze (Source/Origem)}
+\begin{itemize}[leftmargin=*, label=$\bullet$]
+    \item \textbf{Conceito-Chave:} Cópia bruta e inalterada dos dados de origem. Serve como um arquivo de dados persistente.
+    \item \textbf{Função:} Ingestão direta dos dados de origem (Ex: Ergast API). Garantir a imutabilidade.
+    \item \textbf{Desafios:} Tratar tipos de dados simples (Ex: converter strings para numéricos básicos).
+    \item \textbf{Artefato Principal:} \texttt{source.sql}
+\end{itemize}
+
+\section{Pilar 2: Camada Prata (Staging/Preparação)}
+\begin{itemize}[leftmargin=*, label=$\bullet$]
+    \item \textbf{Conceito-Chave:} Limpeza, transformação e harmonização dos dados para uso analítico.
+    \item \textbf{Função:}
+    \begin{enumerate}
+        \item \textbf{Limpeza:} Correção de valores nulos e inconsistências (Ex: substituição de \texttt{\textbackslash N} por \texttt{NULL}).
+        \item \textbf{Transformação:} Conversões de unidades e formatação (Ex: \texttt{time\_ms} para \texttt{duracao\_parada\_seg}).
+        \item \textbf{Integração:} Junção de dados de múltiplas tabelas de origem (Ex: \texttt{laptimes} + \texttt{pitstops}).
+    \end{enumerate}
+    \item \textbf{Artefato Principal:} \texttt{etl.sql} e \texttt{staging.sql}
+\end{itemize}
+
+\section{Pilar 3: Camada Gold (Data Warehouse)}
+\begin{itemize}[leftmargin=*, label=$\bullet$]
+    \item \textbf{Conceito-Chave:} Modelo Dimensional (Esquema Estrela) otimizado para consultas de BI e Análise.
+    \item \textbf{Função:}
+    \begin{enumerate}
+        \item \textbf{Dimensões (DM):} Tabelas descritivas (Pilotos, Corridas, Equipes, Status).
+        \item \textbf{Fatos (FT):} Tabela central contendo as métricas e as chaves substitutas (\textit{Surrogate Keys} - SRK) para as dimensões.
+    \end{enumerate}
+    \item \textbf{Padrão de Chave:} Uso de \textbf{SRK} (Surrogate Key) para garantir a integridade e isolar a camada analítica de mudanças nas chaves de origem.
+    \item \textbf{Exemplo FT:} \texttt{ft\_voltas\_tempo\_parada} (métrica: \texttt{tempo\_volta\_ms}, chaves: \texttt{srk\_piloto}, \texttt{srk\_equipe}).
+\end{itemize}
+
+\section{Pilar 4: Análise (Consultas SQL)}
+\begin{itemize}[leftmargin=*, label=$\bullet$]
+    \item \textbf{Conceito-Chave:} Extração de \textit{insights} de negócio a partir do modelo dimensional.
+    \item \textbf{Função:} Uso de \texttt{JOINs} entre a Tabela de Fatos e as Dimensões para responder a perguntas complexas de forma eficiente.
+    \item \textbf{Exemplos de Insights:}
+    \begin{itemize}
+        \item \textbf{Desempenho:} Tempo médio de volta de pilotos por corrida (\texttt{media\_tempo\_volta\_seg}).
+        \item \textbf{Confiabilidade:} Contagem de incidentes por motivo de status (\texttt{contagem\_incidentes}).
+        \item \textbf{Eficiência:} Duração média do pit stop por equipe (\texttt{media\_duracao\_pit\_stop\_seg}).
+    \end{itemize}
+    \item \textbf{Artefato Principal:} \texttt{consultas.sql}
+\end{itemize}
+
+\end{document}
