@@ -11,7 +11,7 @@ services:
       # Mantendo dados do PG dentro de dags, como solicitado
       - ../dags/pg_airflow_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "airflow"]
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
       retries: 5

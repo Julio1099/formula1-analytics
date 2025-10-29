@@ -60,5 +60,10 @@ CREATE TABLE IF NOT EXISTS gold.ft_voltas_tempo_parada (
     tempo_volta_ms          INTEGER,
     duracao_parada_seg      DECIMAL(10, 3) NOT NULL DEFAULT 0,
     
+    -- === COLUNAS ATUALIZADAS (DE ACORDO COM O NOVO DDL_SILVER) ===
+    -- Métricas de resultado da corrida (denormalizadas no nível da volta)
+    pontos_piloto           DECIMAL(10, 1) NOT NULL DEFAULT 0,
+    vitorias_piloto         INTEGER NOT NULL DEFAULT 0,
+    
     UNIQUE (srk_piloto, srk_corrida, volta) 
 );
