@@ -111,58 +111,61 @@ ORDER BY
 
 -- 2. Confiabilidade da Equipe: Contagem de Incidentes por Motivo de Status
 -- Objetivo: Identificar as causas mais frequentes de abandono (incidentes) por equipe , esse codigo mostra os incidentes individuais e totais por equipe.
+WITH incidentes AS (
+    SELECT DISTINCT
+        f.srk_equipe,
+        f.srk_status,
+        f.srk_piloto, 
+        f.srk_corrida 
+    FROM
+        gold.ft_voltas_tempo_parada f
+    JOIN
+        gold.dm_status ds ON f.srk_status = ds.srk_status
+    WHERE
+        ds.descricao_status NOT IN (
+            'Finished', '+1 Lap', '+2 Laps', '+3 Laps', '+4 Laps', '+5 Laps', 
+            '+6 Laps', '+7 Laps', '+8 Laps', '+9 Laps', '+10 Laps', '+11 Laps', 
+            '+12 Laps', '+13 Laps', '+14 Laps', '+15 Laps', '+16 Laps', 
+            '+17 Laps', '+18 Laps', '+19 Laps', '+20 Laps', '+21 Laps', 
+            '+22 Laps', '+23 Laps', '+24 Laps', '+25 Laps', '+26 Laps', 
+            '+29 Laps', '+30 Laps', '+38 Laps', '+42 Laps', '+44 Laps', 
+            '+46 Laps', '+49 Laps'
+        )
+)
+
+
 SELECT
     de.nome_equipe AS equipe,
-    'Total de incidentes' AS motivo_incidente, 
-    COUNT(f.srk_tempo_volta) AS contagem_incidentes
+    'Total de incidentes' AS motivo_incidente,
+    COUNT(*) AS contagem_incidentes 
 FROM
-    gold.ft_voltas_tempo_parada f
+    incidentes i
 JOIN
-    gold.dm_equipe de ON f.srk_equipe = de.srk_equipe
-JOIN
-    gold.dm_status ds ON f.srk_status = ds.srk_status
-WHERE
-    ds.descricao_status NOT IN ('Finished',
-'+1 Lap', '+2 Laps', '+3 Laps', '+4 Laps', '+5 Laps', '+6 Laps',
-'+7 Laps', '+8 Laps', '+9 Laps', '+10 Laps', '+11 Laps', '+12 Laps',
-'+13 Laps', '+14 Laps', '+15 Laps', '+16 Laps', '+17 Laps', '+18 Laps',
-'+19 Laps', '+20 Laps', '+21 Laps', '+22 Laps', '+23 Laps', '+24 Laps',
-'+25 Laps', '+26 Laps', '+29 Laps', '+30 Laps', '+38 Laps', '+42 Laps',
-'+44 Laps', '+46 Laps', '+49 Laps'
-)
+    gold.dm_equipe de ON i.srk_equipe = de.srk_equipe
 GROUP BY
-    de.nome_equipe 
+    de.nome_equipe
 
 UNION ALL
 
 SELECT
     de.nome_equipe AS equipe,
     ds.descricao_status AS motivo_incidente,
-    COUNT(f.srk_tempo_volta) AS contagem_incidentes
+    COUNT(*) AS contagem_incidentes
 FROM
-    gold.ft_voltas_tempo_parada f
+    incidentes i
 JOIN
-    gold.dm_equipe de ON f.srk_equipe = de.srk_equipe
+    gold.dm_equipe de ON i.srk_equipe = de.srk_equipe
 JOIN
-    gold.dm_status ds ON f.srk_status = ds.srk_status
-WHERE
-    ds.descricao_status NOT IN ('Finished',
-'+1 Lap', '+2 Laps', '+3 Laps', '+4 Laps', '+5 Laps', '+6 Laps',
-'+7 Laps', '+8 Laps', '+9 Laps', '+10 Laps', '+11 Laps', '+12 Laps',
-'+13 Laps', '+14 Laps', '+15 Laps', '+16 Laps', '+17 Laps', '+18 Laps',
-'+19 Laps', '+20 Laps', '+21 Laps', '+22 Laps', '+23 Laps', '+24 Laps',
-'+25 Laps', '+26 Laps', '+29 Laps', '+30 Laps', '+38 Laps', '+42 Laps',
-'+44 Laps', '+46 Laps', '+49 Laps'
-)
+    gold.dm_status ds ON i.srk_status = ds.srk_status
 GROUP BY
     de.nome_equipe, ds.descricao_status
 
 ORDER BY
-    equipe, 
-    contagem_incidentes DESC; 
+--    equipe, 
+    contagem_incidentes DESC;
 
--- 3. Análise de Eficiência de Pit Stop: Duração Média da Parada por Equipe e pilotos.
--- Objetivo: Comparar a velocidade das equipes e pilotos na troca de pneus (pit stops).
+-- 3. Análise de Eficiência de Pit Stop: Duração Média da Parada por Equipe e pilotos ao longo dos anos e por temporada.
+-- Objetivo: Comparar a velocidade das equipes e pilotos na troca de pneus ao longo dos anos e por temporada (pit stops).
 SELECT * FROM (
     SELECT
         'MÉDIA DA EQUIPE' AS piloto, 
@@ -330,7 +333,7 @@ WITH DriverRaceSummary AS (
         f.srk_piloto,
         f.srk_corrida,
         MAX(f.srk_equipe) AS srk_equipe,
-        MAX(f.pontos_piloto) AS pontos_corrida
+        MAX(f.pontos_piloto) AS pontos_acumulados_ate_corrida 
     FROM
         gold.ft_voltas_tempo_parada f
     GROUP BY
@@ -344,26 +347,30 @@ PointsByRound AS (
         dc.nome_corrida,
         drs.srk_piloto,
         drs.srk_equipe,
-        drs.pontos_corrida,
-        SUM(drs.pontos_corrida) OVER (
-            PARTITION BY drs.srk_piloto, dc.ano
-            ORDER BY dc.rodada
-            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
-        ) AS pontos_acumulados
+        
+		drs.pontos_acumulados_ate_corrida AS pontos_acumulados,
+        
+		(drs.pontos_acumulados_ate_corrida - 
+         LAG(drs.pontos_acumulados_ate_corrida, 1, 0.0) OVER (
+             PARTITION BY drs.srk_piloto, dc.ano 
+             ORDER BY dc.rodada
+         )
+        ) AS pontos_corrida
+        
     FROM
         DriverRaceSummary drs
     JOIN
         gold.dm_corrida dc ON drs.srk_corrida = dc.srk_corrida
     WHERE
-        dc.ano = 2024 -- <-- Ajuste a temporada conforme necessário
+        dc.ano = 2023 -- <-- Ajuste a temporada 
 )
 SELECT ano AS temporada,
        rodada,
        nome_corrida,
        dp.nome_completo AS piloto,
        de.nome_equipe AS equipe,
-       pontos_corrida,
-       pontos_acumulados
+       pontos_corrida,     
+       pontos_acumulados   
 FROM PointsByRound pbr
 JOIN gold.dm_piloto dp ON pbr.srk_piloto = dp.srk_piloto
 JOIN gold.dm_equipe de ON pbr.srk_equipe = de.srk_equipe
@@ -372,57 +379,55 @@ ORDER BY
     piloto,
     rodada;
 
+
 -- 8. Carga de Pit Stop: Volume e Tempo Total por Equipe na Temporada
 -- Objetivo: Quantificar o esforço de pit stop por equipe (quantidade, tempo total e médias) em uma temporada.
-SELECT dc.ano AS temporada,
-       de.nome_equipe AS equipe,
-       SUM(CASE WHEN f.duracao_parada_seg > 0 THEN 1 ELSE 0 END) AS total_paradas,
-       ROUND(SUM(CASE WHEN f.duracao_parada_seg > 0 THEN f.duracao_parada_seg ELSE 0 END), 3) AS tempo_total_paradas_seg,
-       ROUND(AVG(NULLIF(f.duracao_parada_seg, 0)), 3) AS media_parada_seg,
-       ROUND(MIN(NULLIF(f.duracao_parada_seg, 0)), 3) AS melhor_parada_seg,
-       ROUND(MAX(NULLIF(f.duracao_parada_seg, 0)), 3) AS pior_parada_seg
-FROM gold.ft_voltas_tempo_parada f
-JOIN gold.dm_corrida dc ON f.srk_corrida = dc.srk_corrida
-JOIN gold.dm_equipe de ON f.srk_equipe = de.srk_equipe
-WHERE
-    dc.ano = 2024 -- <-- Ajuste a temporada conforme necessário
-GROUP BY
-    dc.ano,
-    de.nome_equipe
-HAVING
-    SUM(CASE WHEN f.duracao_parada_seg > 0 THEN 1 ELSE 0 END) > 0
-ORDER BY
-    tempo_total_paradas_seg ASC;
+SELECT * FROM (
+    SELECT
+        dc.ano AS temporada, 
+        'MÉDIA DA EQUIPE' AS piloto, 
+        de.nome_equipe AS equipe,
+        COUNT(CASE WHEN f.duracao_parada_seg > 0 THEN 1 END) AS total_paradas,
+        ROUND(AVG(CASE WHEN f.duracao_parada_seg > 0 THEN f.duracao_parada_seg ELSE NULL END), 3) AS media_duracao_pit_stop_seg
+    FROM
+        gold.ft_voltas_tempo_parada f
+    JOIN
+        gold.dm_equipe de ON f.srk_equipe = de.srk_equipe
+    JOIN 
+        gold.dm_corrida dc ON f.srk_corrida = dc.srk_corrida
+    GROUP BY
+        dc.ano, 
+        de.nome_equipe 
+    HAVING
+        COUNT(CASE WHEN f.duracao_parada_seg > 0 THEN 1 END) > 100
 
--- 9. Incidentes por Corrida e Motivo (DNF por Evento)
--- Objetivo: Identificar corridas mais críticas e motivos de abandono associados.
-SELECT dc.ano AS temporada,
-       dc.rodada,
-       dc.nome_corrida,
-       ds.descricao_status AS motivo_incidente,
-       COUNT(DISTINCT f.srk_piloto) AS pilotos_afetados,
-       COUNT(*) AS voltas_afetadas
-FROM gold.ft_voltas_tempo_parada f
-JOIN gold.dm_corrida dc ON f.srk_corrida = dc.srk_corrida
-JOIN gold.dm_status ds ON f.srk_status = ds.srk_status
-WHERE
-    ds.descricao_status NOT IN (
-        'Finished',
-        '+1 Lap', '+2 Laps', '+3 Laps', '+4 Laps', '+5 Laps', '+6 Laps',
-        '+7 Laps', '+8 Laps', '+9 Laps', '+10 Laps', '+11 Laps', '+12 Laps',
-        '+13 Laps', '+14 Laps', '+15 Laps', '+16 Laps', '+17 Laps', '+18 Laps',
-        '+19 Laps', '+20 Laps', '+21 Laps', '+22 Laps', '+23 Laps', '+24 Laps',
-        '+25 Laps', '+26 Laps', '+29 Laps', '+30 Laps', '+38 Laps', '+42 Laps',
-        '+44 Laps', '+46 Laps', '+49 Laps'
-    )
-    AND dc.ano BETWEEN 2022 AND 2024 
-GROUP BY
-    dc.ano,
-    dc.rodada,
-    dc.nome_corrida,
-    ds.descricao_status
+    UNION ALL
+    
+    SELECT
+        dc.ano AS temporada, 
+        dp.nome_completo AS piloto,
+        de.nome_equipe AS equipe,
+        COUNT(CASE WHEN f.duracao_parada_seg > 0 THEN 1 END) AS total_paradas,
+        ROUND(AVG(CASE WHEN f.duracao_parada_seg > 0 THEN f.duracao_parada_seg ELSE NULL END), 3) AS media_duracao_pit_stop_seg
+    FROM
+        gold.ft_voltas_tempo_parada f
+    JOIN
+        gold.dm_equipe de ON f.srk_equipe = de.srk_equipe
+    JOIN
+        gold.dm_piloto dp ON f.srk_piloto = dp.srk_piloto 
+    JOIN 
+        gold.dm_corrida dc ON f.srk_corrida = dc.srk_corrida
+    GROUP BY
+        dc.ano, 
+        dp.nome_completo, 
+        de.nome_equipe    
+    HAVING
+        COUNT(CASE WHEN f.duracao_parada_seg > 0 THEN 1 END) > 20
+
+) AS combined_results 
+
 ORDER BY
-    temporada,
-    rodada,
-    pilotos_afetados DESC,
-    voltas_afetadas DESC;
+    temporada DESC, 
+    CASE WHEN piloto = 'MÉDIA DA EQUIPE' THEN 1 ELSE 2 END ASC,  
+--  equipe ASC,
+    media_duracao_pit_stop_seg ASC;
