@@ -145,3 +145,12 @@ Armazena atributos sobre o status final do piloto.
 | srk_status | PK | SERIAL | Chave primária. |
 | chave_status_origem | BK | INTEGER | Chave de Negócio. ID original do status. |
 | descricao_status |  | VARCHAR(255) | Descrição textual do status (e.g., Finished, Accident, Engine). |
+
+
+## Histórico de Versão
+
+| Data | Versão | Descrição | Autor | Revisor |
+| :---: | :---: | :--- | :--- | :--- |
+| 29/10/2025 | `1.0` | Criação inicial do MER para Fórmula 1. | [Júlio Cesar](https://github.com/Julio1099) | [Kaleb Macedo](https://github.com/kalebmacedo) |
+| 30/10/2025 | `1.1` | Criação do diagrama para o MER | [Kaleb Macedo](https://github.com/kalebmacedo)|  |
+

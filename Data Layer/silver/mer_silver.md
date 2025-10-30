@@ -40,7 +40,7 @@ A entidade `ResultadosCorridas` é o núcleo da Camada Silver. Ela contém tanto
 
 > **Nota:** Os atributos marcados como *Chave Integrada* são mantidos para fins de auditoria e rastreabilidade com as tabelas de origem na Camada Bronze.
 
-## 📜 Histórico de Versão
+## Histórico de Versão
 
 | Data | Versão | Descrição | Autor | Revisor |
 | :---: | :---: | :--- | :--- | :--- |

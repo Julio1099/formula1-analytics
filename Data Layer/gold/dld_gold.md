@@ -65,3 +65,10 @@ Armazena atributos sobre o status final do piloto.
 | `srk_status` | `SERIAL` | **PK** | Chave sub-rogada da Dimensão. | (Gerada) | Gerada automaticamente pelo PostgreSQL. |
 | `chave_status_origem` | `INTEGER` | **BK** | Chave de Negócio. ID do status na origem. | `id_status` | Renomeado de `id_status` para `chave_status_origem` e selecionado como DISTINCT. |
 | `descricao_status` | `VARCHAR(255)` | | Descrição textual do status (e.g., Finished, Accident). | `descricao_status` | Direto da Silver. |
+
+## Histórico de versão
+
+| Data | Versão | Descrição | Autor | Revisor |
+|:---:|:---:|:---:|:---:|:---:|
+| 29/10/2025 | `1.0`      | Ajuste para representação de tabela única | [Júlio Cesar](https://github.com/Julio1099) | [Kaleb Macedo](https://github.com/kalebmacedo) |
+
