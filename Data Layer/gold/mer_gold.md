@@ -53,10 +53,24 @@ erDiagram
         INTEGER srk_status FK "Referência à DM_STATUS"
         INTEGER volta
         INTEGER posicao_na_volta
-        INTEGER tempo_volta_ms "Fato: tempo da volta em ms"
-        DECIMAL duracao_parada_seg "Fato: duração do pit stop em segundos"
+        INTEGER tempo_volta_ms "Tempo da volta em ms"
+        DECIMAL duracao_parada_seg "Duração do pit stop em segundos"
+        DECIMAL pontos_piloto "Pontos obtidos na corrida"
+        INTEGER vitorias_piloto "Indicador de vitória"
     }
 ```
+
+### 2.1. Visão Estrela Simplificada
+
+```
+                 DM_PILOTO
+                     |
+DM_STATUS ---- FT_VOLTAS_TEMPO_PARADA ---- DM_EQUIPE
+                     |
+                 DM_CORRIDA
+```
+
+*As ligações indicam relacionamentos 1:N partindo das dimensões (1) para a tabela fato (N).* 
 
 ## 3. Descrição das Entidades
 
@@ -75,6 +89,8 @@ A Tabela de Fato captura as métricas de desempenho de um piloto em uma volta ou
 | posicao_na_volta |  | INTEGER | Posição do piloto ao cruzar a linha de chegada da volta. |
 | tempo_volta_ms |  | INTEGER | Tempo total da volta em milissegundos. |
 | duracao_parada_seg |  | DECIMAL(10, 3) | Duração da parada nos boxes em segundos (0 se não houve parada naquela volta). |
+| pontos_piloto |  | DECIMAL(10, 1) | Pontos obtidos pelo piloto na corrida (repetidos em todas as voltas daquela prova). |
+| vitorias_piloto |  | INTEGER | Indicador 1/0 se o piloto venceu a corrida (repetido nas voltas da prova). |
 
 **UNIQUE:** `(srk_piloto, srk_corrida, volta)`
 
