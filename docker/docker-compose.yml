@@ -16,7 +16,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # Base de dados do Data Warehouse (INTOCADO)
+  # Base de dados do Data Warehouse
   db:
     image: postgres:13
     container_name: f1_postgres_db
@@ -30,7 +30,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data # Volume nomeado (global)
 
-  # Interface Web para o Data Warehouse (pgAdmin) - ADICIONADO
+  # Interface Web para o Data Warehouse (pgAdmin) 
   pgadmin:
     image: dpage/pgadmin4
     container_name: f1_pgadmin_web
@@ -39,7 +39,6 @@ services:
     ports:
       - "5050:80" # Porta para acesso: http://localhost:5050
     environment:
-      # **ATENÇÃO: MUDE ESTAS CREDENCIAIS!**
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: 1234 
       PGADMIN_LISTEN_PORT: 80
@@ -47,7 +46,7 @@ services:
       - pgdata-pgadmin:/var/lib/pgadmin
     restart: always
 
-  # Serviço PySpark (INTOCADO)
+  # Serviço PySpark 
   spark-etl:
     build:
       context: ..
@@ -69,8 +68,6 @@ services:
       - ../Transformer/etl_silver_to_gold.ipynb:/home/jovyan/work/etl_silver_to_gold.ipynb
     command: ["sleep", "infinity"]
 
-  # --- SERVIÇOS DO AIRFLOW COM CAMINHOS CORRIGIDOS ---
-
   # Serviço Webserver do Airflow
   airflow-webserver:
     build:
@@ -88,10 +85,8 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
       AIRFLOW__WEBSERVER__SECRET_KEY: "seu_super_segredo_aqui_troque_depois"
     volumes:
-      - ../dags:/opt/airflow/dags # OK: dags da raiz
-      # --- CORREÇÃO AQUI ---
+      - ../dags:/opt/airflow/dags 
       - ./logs:/opt/airflow/logs # Volta a apontar para a pasta docker/logs
-      # ---------------------
       - /var/run/docker.sock:/var/run/docker.sock
       - ../Data Layer/silver/ddl_silver.sql:/opt/airflow/dags/sql/ddl_silver.sql
       - ../Data Layer/gold/ddl_gold.sql:/opt/airflow/dags/sql/ddl_gold.sql
@@ -110,10 +105,8 @@ services:
         condition: service_healthy
     environment: *airflow_common_env
     volumes:
-      - ../dags:/opt/airflow/dags # OK: dags da raiz
-      # --- CORREÇÃO AQUI ---
+      - ../dags:/opt/airflow/dags 
       - ./logs:/opt/airflow/logs # Volta a apontar para a pasta docker/logs
-      # ---------------------
       - /var/run/docker.sock:/var/run/docker.sock
       - ../Data Layer/silver/ddl_silver.sql:/opt/airflow/dags/sql/ddl_silver.sql
       - ../Data Layer/gold/ddl_gold.sql:/opt/airflow/dags/sql/ddl_gold.sql
@@ -137,6 +130,4 @@ services:
 
 volumes:
   pgdata: # Volume do banco f1_postgres_db
-  pgdata-pgadmin: # ADICIONADO: Volume para dados persistentes do pgAdmin
-  # Opcional remover pg_airflow_data daqui se não for mais usar volume nomeado
-  # pg_airflow_data:
+  pgdata-pgadmin: 

@@ -1,6 +1,5 @@
 FROM jupyter/pyspark-notebook:latest
 
-# Mude para root para instalar pacotes
 USER root
 
 # Instala dependências Python (psycopg2, papermill) E do sistema (wget, psql)
