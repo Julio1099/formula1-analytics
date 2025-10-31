@@ -1,16 +1,15 @@
-# Dicionário de Linhas e Detalhes (DLD) - Camada SILVER
+# Diagrama Lógico de Dados (DLD) - Camada Silver
 
-Este documento detalha o Dicionário de Linhas e Detalhes da Camada Silver, que adota uma arquitetura de tabela única e desnormalizada (`ResultadosCorridas`). O foco é na definição das colunas e na rastreabilidade da informação (Data Lineage).
+## 1. Introdução
+Este documento detalha o Diagrama Lógico de Dados da Camada Silver, que adota uma arquitetura de tabela única e desnormalizada. O foco é na definição das colunas e na rastreabilidade da informação.
 
 ## 1. Tabela resultadoscorridas
 
-Essa tabela armazena os dados consolidados da Camada Silver. Cada registro combina informações de corrida, piloto, equipe, voltas (*lap times*), paradas nos boxes (*pit stops*) e resultado final em uma única linha.
+A tabela a seguir armazena os dados consolidados da Camada Silver. Cada registro combina informações de corrida, piloto, equipe, voltas, paradas nos boxes e resultado final em uma única linha.
 
-### 1.1. Definição da Coluna e Lineage
+Nesta camada, as restrições físicas de FK não são aplicadas. No entanto, os atributos são mantidos para fins de rastreabilidade e como chaves de negócio na carga da Camada Gold. Assim, a coluna lineage indica qual conjunto de dados da Camada Bronze alimentou cada uma das linhas da tabela.
 
-A Tabela 2 descreve os atributos, tipos de dados e, crucialmente, a **Origem dos Dados (Lineage)**, que indica qual conjunto de dados da Camada Bronze alimentou cada coluna.
-
-<p align="center"> Tabela 2 - Tabela resultadoscorridas</p>
+<p align="center"> Tabela 1 - Tabela resultadoscorridas</p>
 
 | Nome | Definição Lógica | Tipo SQL | Restrições de Domínio | Lineage (Origem da Camada Bronze) |
 |:---|:---|:---|:---|:---|
@@ -30,20 +29,15 @@ A Tabela 2 descreve os atributos, tipos de dados e, crucialmente, a **Origem dos
 | **nome\_equipe** | Nome da equipe/construtora (desnormalizado) | `VARCHAR(255)` | NOT NULL | `constructors.name` |
 | **descricao\_status** | Descrição textual do status (ex: Finished, Accident) | `VARCHAR(255)` | NOT NULL | `status.status` |
 
-**Nota sobre Chaves Estrangeiras (Lógicas):** Nesta camada denormalizada, as restrições físicas de FK não são aplicadas. No entanto, os atributos `id_corrida`, `id_piloto`, etc., são mantidos para fins de rastreabilidade e como chaves de negócio na carga da Camada Gold.
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+
 
 ## 2. Histórico de Versão
 
 | Data | Versão | Descrição | Autor | Revisor |
 |:---:|:---:|:---:|:---:|:---:|
-| 10/10/2025 | `1.0` | Adição inicial do dicionário de dados silver. | [Júlio Cesar], [Fernando Gabriel] | [Othavio Bolzan], [Kaleb Macedo] |
-| 29/10/2025 | `1.1` | Padronização do formato para alinhamento com a documentação Bronze. | [Júlio Cesar], [Fernando Gabriel] | [Othavio Bolzan], [Kaleb Macedo] |
-| **29/10/2025** | **`1.2`** | **Adição da coluna Lineage (Origem da Camada Bronze) para rastreabilidade de dados.** | **Gemini** | **-** |
-
----
-
-## Histórico de versão
-
-| Data | Versão | Descrição | Autor | Revisor |
-|:---:|:---:|:---:|:---:|:---:|
-| 24/10/2025 | `1.0`      | Ajuste para representação de tabela única | [Júlio Cesar](https://github.com/Julio1099) | [Othavio Bolzan](https://github.com/bolzanMGB) |
+| 10/10/2025 | `1.0` | Adição inicial do dicionário de dados silver. | [Júlio Cesar](https://github.com/Julio1099)  | [Kaleb Macedo](https://github.com/kalebmacedo) |
+| 24/10/2025 | `1.0`      | Ajuste para representação de tabela única | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn)  | [Othavio Bolzan](https://github.com/bolzanMGB) |
+| 29/10/2025 | `1.1` | Padronização do formato para alinhamento com a documentação Bronze. | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn) | [Othavio Bolzan](https://github.com/bolzanMGB)|
+| 29/10/2025 | **`1.2`** | Adição da coluna Lineage (Origem da Camada Bronze) para rastreabilidade de dados. | [Júlio Cesar](https://github.com/Julio1099)  |  [Kaleb Macedo](https://github.com/kalebmacedo)|
+| 31/10/2025 | **`1.2`** | Refatorização da documentação | [Othavio Bolzan](https://github.com/bolzanMGB)|  [Kaleb Macedo](https://github.com/kalebmacedo)|

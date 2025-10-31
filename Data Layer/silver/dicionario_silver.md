@@ -1,28 +1,15 @@
-# Dicionário de Dados Silver
+# Dicionário de Dados - Camada Silver
 
 ## 1. Introdução
 
-Este documento serve como a documentação para o dicionário de dados da **Camada Silver** do sistema. Esta camada representa uma visão desnormalizada e integrada dos dados, pronta para análises. A Tabela 1 indica a única entidade central desta camada.
+Este documento serve como a documentação para o dicionário de dados da Camada Silver do sistema. Esta camada representa uma visão desnormalizada e integrada dos dados, pronta para análises. 
 
-<p align="center"> Tabela 1 - Tabelas utilizadas</p>
-
-<div style="margin: 0 auto; width: fit-content;">
-
-| Tabelas |
-|:---|
-| [resultadoscorridas](#tabela-resultadoscorridas) |
-
-</div>
-
-<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cesar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
-
----
 
 ## 2. Tabela resultadoscorridas
 
-Essa tabela armazena os dados consolidados da Camada Silver. Cada registro combina informações de corrida, piloto, equipe, voltas (*lap times*), paradas nos boxes (*pit stops*) e resultado final em uma única linha.
+Essa tabela armazena os dados consolidados da Camada Silver. Cada registro combina informações de corrida, piloto, equipe, voltas (lap times), paradas nos boxes (*pit stops*) e resultado final em uma única linha.
 
-<p align="center"> Tabela 2 - Tabela resultadoscorridas</p>
+<p align="center"> Tabela 1 - Tabela resultadoscorridas</p>
 
 <div style="margin: 0 auto; width: fit-content;">
 
@@ -56,3 +43,4 @@ Essa tabela armazena os dados consolidados da Camada Silver. Cada registro combi
 |:---:|:---:|:---:|:---:|:---:|
 | 10/10/2025 | `1.0` | Adição do dicionário de dados silver | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn) | [Othavio Bolzan](https://github.com/bolzanMGB), [Kaleb Macedo](https://github.com/kalebmacedo) |
 | 29/10/2025 | **`1.1`** | Padronização do formato para alinhamento com a documentação Bronze. | [Júlio Cesar](https://github.com/Julio1099), [Fernando Gabriel](https://github.com/show-dawn) | [Othavio Bolzan](https://github.com/bolzanMGB), [Kaleb Macedo](https://github.com/kalebmacedo) |
+| 31/10/2025 | **`1.2`** | Refatorização da documentação | [Othavio Bolzan](https://github.com/bolzanMGB)|  [Kaleb Macedo](https://github.com/kalebmacedo)|

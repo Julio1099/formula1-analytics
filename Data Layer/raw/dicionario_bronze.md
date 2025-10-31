@@ -1,4 +1,4 @@
-# Dicionário de Dados Bronze
+# Dicionário de Dados - Camada Bronze
 
 ## 1. Introdução
 

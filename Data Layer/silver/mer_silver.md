@@ -1,6 +1,6 @@
-# Modelo Conceitual de Dados — Camada Silver
+# Modelo Conceitual de Dados (MER) — Camada Silver
 
-## 1. Sumário Executivo
+## 1. Introdução
 
 Este documento detalha o modelo conceitual de dados para a Camada Silver do *Data Lakehouse*. Em conformidade com a arquitetura estabelecida, a Camada Silver adota uma **estrutura desnormalizada** (tabela única) para consolidar todos os dados de contexto de Fórmula 1, facilitando a análise e o consumo direto pelas camadas posteriores (Gold/Análise).
 
@@ -16,9 +16,11 @@ A **decisão arquitetural** foi consolidar todos os dados transacionais e de ref
 
 ## 3. Entidade Principal da Camada Silver
 
-A entidade `ResultadosCorridas` é o núcleo da Camada Silver. Ela contém tanto os identificadores (para rastreabilidade) quanto os atributos textuais desnormalizados (para usabilidade analítica).
+A entidade `ResultadosCorridas` é o núcleo da Camada Silver. Ela contém tanto os identificadores (para rastreabilidade) quanto os atributos textuais desnormalizados (para usabilidade analítica). 
 
-### Nome da Entidade: `ResultadosCorridas`
+
+<p align="center"> Tabela 1 - Entidade ResultadosCorridas</p>
+
 
 | Atributo | Tipo de Dado (Conceitual) | Rastreabilidade | Descrição Conceitual |
 | :--- | :--- | :--- | :--- |
@@ -38,6 +40,8 @@ A entidade `ResultadosCorridas` é o núcleo da Camada Silver. Ela contém tanto
 | **nome\_equipe** | Textual | Origem: Equipes | Nome completo da equipe/construtora (desnormalizado). |
 | **descricao\_status** | Textual | Origem: Status | Descrição textual do status final/motivo do fim (desnormalizado). |
 
+<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+
 > **Nota:** Os atributos marcados como *Chave Integrada* são mantidos para fins de auditoria e rastreabilidade com as tabelas de origem na Camada Bronze.
 
 ## Histórico de Versão
@@ -50,3 +54,4 @@ A entidade `ResultadosCorridas` é o núcleo da Camada Silver. Ela contém tanto
 | 09/10/2025 | `1.3` | Ajustes no diagrama conceitual. | [Kaleb Macedo](https://github.com/kalebmacedo) | [Othavio Bolzan](https://github.com/bolzanMGB) |
 | 09/10/2025 | `1.4` | Correções adicionais no diagrama (minor fix). | [Kaleb Macedo](https://github.com/kalebmacedo) | [Othavio Bolzan](https://github.com/bolzanMGB) |
 | 29/10/2025 | **`1.5`** | Reestruturação fundamental para o modelo de Tabela Única (Desnormalizada) na Camada Silver. | [Júlio Cesar](https://github.com/Julio1099) | [Kaleb Macedo](https://github.com/kalebmacedo) |
+| 31/10/2025 | **`1.6`** | Refatorização da documentação | [Othavio Bolzan](https://github.com/bolzanMGB) | [Kaleb Macedo](https://github.com/kalebmacedo) |
