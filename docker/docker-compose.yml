@@ -8,8 +8,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      # Mantendo dados do PG dentro de dags, como solicitado
-      - ../dags/pg_airflow_data:/var/lib/postgresql/data
+      # CORRIGIDO: Aponta para a pasta na raiz do projeto
+      - ../pg_airflow_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
       interval: 5s
@@ -78,6 +78,7 @@ services:
       postgres:
         condition: service_healthy
     ports:
+      # CORRIGIDO: A porta interna é 8080, não 8888
       - "8080:8080"
     environment:
       &airflow_common_env
@@ -86,7 +87,8 @@ services:
       AIRFLOW__WEBSERVER__SECRET_KEY: "seu_super_segredo_aqui_troque_depois"
     volumes:
       - ../dags:/opt/airflow/dags 
-      - ./logs:/opt/airflow/logs # Volta a apontar para a pasta docker/logs
+      # CORRIGIDO: Aponta para a pasta na raiz do projeto
+      - ../logs:/opt/airflow/logs
       - /var/run/docker.sock:/var/run/docker.sock
       - ../Data Layer/silver/ddl_silver.sql:/opt/airflow/dags/sql/ddl_silver.sql
       - ../Data Layer/gold/ddl_gold.sql:/opt/airflow/dags/sql/ddl_gold.sql
@@ -106,7 +108,8 @@ services:
     environment: *airflow_common_env
     volumes:
       - ../dags:/opt/airflow/dags 
-      - ./logs:/opt/airflow/logs # Volta a apontar para a pasta docker/logs
+      # CORRIGIDO: Aponta para a pasta na raiz do projeto
+      - ../logs:/opt/airflow/logs
       - /var/run/docker.sock:/var/run/docker.sock
       - ../Data Layer/silver/ddl_silver.sql:/opt/airflow/dags/sql/ddl_silver.sql
       - ../Data Layer/gold/ddl_gold.sql:/opt/airflow/dags/sql/ddl_gold.sql
@@ -130,4 +133,4 @@ services:
 
 volumes:
   pgdata: # Volume do banco f1_postgres_db
-  pgdata-pgadmin: 
+  pgdata-pgadmin:

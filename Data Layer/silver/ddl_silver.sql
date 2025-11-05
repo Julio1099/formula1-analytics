@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS ResultadosCorridas (
+CREATE TABLE IF NOT EXISTS public.ResultadosCorridas (
     id_equipe INTEGER,
     nome_equipe VARCHAR(255),
     

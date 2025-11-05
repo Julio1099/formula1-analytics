@@ -63,7 +63,7 @@ with DAG(
     clear_silver_tables = PostgresOperator(
         task_id='clear_silver_tables',
         postgres_conn_id='f1_postgres_connection', 
-        sql="TRUNCATE TABLE ResultadosCorridas RESTART IDENTITY;",
+        sql="TRUNCATE TABLE public.ResultadosCorridas RESTART IDENTITY;",
     )
 
     # 3. Execução do ETL Raw -> Silver
