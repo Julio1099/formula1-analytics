@@ -59,7 +59,6 @@ with DAG(
     )
     
     # 2. NOVA TAREFA: LIMPAR TABELAS SILVER ANTES DO CARREGAMENTO
-    # CORRIGIDO: Limpa APENAS a tabela ResultadosCorridas
     clear_silver_tables = PostgresOperator(
         task_id='clear_silver_tables',
         postgres_conn_id='f1_postgres_connection', 
@@ -85,10 +84,11 @@ with DAG(
         task_id='clear_gold_tables',
         postgres_conn_id='f1_postgres_connection', 
         sql="""
-        TRUNCATE TABLE gold.dm_piloto RESTART IDENTITY CASCADE; 
-        TRUNCATE TABLE gold.dm_equipe RESTART IDENTITY CASCADE; 
-        TRUNCATE TABLE gold.dm_corrida RESTART IDENTITY CASCADE; 
-        TRUNCATE TABLE gold.dm_status RESTART IDENTITY CASCADE;
+        TRUNCATE TABLE gold.fat_des_volt RESTART IDENTITY CASCADE;
+        TRUNCATE TABLE gold.dim_pil RESTART IDENTITY CASCADE; 
+        TRUNCATE TABLE gold.dim_eqp RESTART IDENTITY CASCADE; 
+        TRUNCATE TABLE gold.dim_cor RESTART IDENTITY CASCADE; 
+        TRUNCATE TABLE gold.dim_sts RESTART IDENTITY CASCADE;
         """,
     )
     
