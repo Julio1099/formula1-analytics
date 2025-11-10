@@ -12,7 +12,7 @@ A Camada Gold agrega métricas e dimensões já tratadas, otimizadas para consum
 
 ![DERgold](assets/DERgold01.png)
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
 ## 3. Componentes do Diagrama
 

@@ -40,7 +40,7 @@ A entidade `ResultadosCorridas` é o núcleo da Camada Silver. Ela contém tanto
 | **nome\_equipe** | Textual | Origem: Equipes | Nome completo da equipe/construtora (desnormalizado). |
 | **descricao\_status** | Textual | Origem: Status | Descrição textual do status final/motivo do fim (desnormalizado). |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
 > **Nota:** Os atributos marcados como *Chave Integrada* são mantidos para fins de auditoria e rastreabilidade com as tabelas de origem na Camada Bronze.
 

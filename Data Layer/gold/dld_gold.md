@@ -24,7 +24,7 @@ A tabela fato `FT_VOLTAS_TEMPO_PARADA` é responsável por capturar as métricas
 | `tempo_volta_ms` | `INTEGER` | | Tempo total da volta em milissegundos. | `tempo_volta_ms` | Direto da Silver, com CAST para `IntegerType`. Registros onde `tempo_volta_ms` é NULL são FILTRADOS no ETL. |
 | `duracao_parada_seg` | `DECIMAL(10, 3)` | | Duração da parada nos boxes em segundos. | `duracao_parada_seg` | CAST para `DecimalType(10, 3)`. |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
 
 
@@ -45,7 +45,7 @@ Armazena atributos estáticos sobre os pilotos.
 | `sobrenome` | `VARCHAR(255)` | | Sobrenome do piloto. | `sobrenome_piloto` | Alias. Unicidade garantida por `chave_piloto_origem`. |
 | `nome_completo` | `VARCHAR(510)` | | Nome e sobrenome combinados. | - | Coluna GERADA (Calculated Column) no DDL do PostgreSQL: `(primeiro_nome || ' ' || sobrenome) STORED`. |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
 
 ---
@@ -62,7 +62,7 @@ Armazena atributos estáticos sobre as equipes/construtoras.
 | `chave_equipe_origem` | `INTEGER` | **BK** | Chave de Negócio. ID da equipe na origem. | `id_equipe` | Renomeado de `id_equipe` para `chave_equipe_origem` e selecionado como DISTINCT. |
 | `nome_equipe` | `VARCHAR(255)` | | Nome oficial da equipe. | `nome_equipe` | Direto da Silver. Unicidade garantida por `chave_equipe_origem`. |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
 
 --- 
@@ -81,7 +81,7 @@ Armazena atributos estáticos sobre as corridas.
 | `rodada` | `INTEGER` | | Número da rodada no calendário. | `rodada` | Direto da Silver. |
 | `nome_corrida` | `VARCHAR(255)` | | Nome do Grande Prêmio. | `nome_corrida` | Direto da Silver. |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
 
 ---
@@ -98,7 +98,7 @@ Armazena atributos sobre o status final do piloto.
 | `chave_status_origem` | `INTEGER` | **BK** | Chave de Negócio. ID do status na origem. | `id_status` | Renomeado de `id_status` para `chave_status_origem` e selecionado como DISTINCT. |
 | `descricao_status` | `VARCHAR(255)` | | Descrição textual do status (e.g., Finished, Accident). | `descricao_status` | Direto da Silver. |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
 
 

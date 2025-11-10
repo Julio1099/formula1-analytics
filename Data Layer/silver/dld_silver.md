@@ -29,7 +29,7 @@ Nesta camada, as restrições físicas de FK não são aplicadas. No entanto, os
 | **nome\_equipe** | Nome da equipe/construtora (desnormalizado) | `VARCHAR(255)` | NOT NULL | `constructors.name` |
 | **descricao\_status** | Descrição textual do status (ex: Finished, Accident) | `VARCHAR(255)` | NOT NULL | `status.status` |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="ttps://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
 
 ## 2. Histórico de Versão
