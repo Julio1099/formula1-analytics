@@ -100,6 +100,15 @@ Armazena atributos sobre o status final do piloto.
 
 <p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
 
+## 4. Gráfico do DLD
+
+<p align="center"><b>Figura 1</b> – <a href="assets/graficoDLD.png">DLD da Camada Gold</a></p>
+
+![DERgold](assets/graficoDLD.png)
+
+<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>, <a href="https://github.com/Julio1099"> Júlio Cesar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+
+
 
 
 ## Histórico de versão
@@ -108,4 +117,5 @@ Armazena atributos sobre o status final do piloto.
 |:---:|:---:|:---:|:---:|:---:|
 | 29/10/2025 | **`1.0`**      | Ajuste para representação de tabela única | [Júlio Cesar](https://github.com/Julio1099) | [Kaleb Macedo](https://github.com/kalebmacedo) |
 | 31/10/2025 | **`1.1`** | Refatorização da documentação | [Othavio Bolzan](https://github.com/bolzanMGB) | [Kaleb Macedo](https://github.com/kalebmacedo) |
+| 14/11/2025 | **`1.2`** | Adição do Gráfico do DLD | [Kaleb Macedo](https://github.com/kalebmacedo) |  |
 
