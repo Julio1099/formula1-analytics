@@ -8,7 +8,7 @@ A Camada Gold agrega métricas e dimensões já tratadas, otimizadas para consum
 
 ## 2. Visão Geral do DER
 
-**Figura 1** – [DER da Camada Gold](https://www.google.com/search?q=assets/DERgold01.png)
+![DER da Camada Gold](assets/DERgold01.png)
 
 **Fonte:** Autoria de [Fernando Carrijo](https://github.com/show-dawn), [Júlio Cesar](https://github.com/Julio1099), [Kaleb Macedo](https://github.com/kalebmacedo) e [Othavio Bolzan](https://github.com/bolzanMGB)
 
