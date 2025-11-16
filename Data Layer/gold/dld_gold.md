@@ -1,115 +1,98 @@
-#  Diagrama Lógico de Dados(DLD) - Camada Gold
-
+# Diagrama Lógico de Dados (DLD) - Camada Gold
 
 ## 1. Introdução
-Este documento detalha cada tabela, coluna e a lógica de transformação (ETL) utilizada para popular a Camada Gold (Data Warehouse), que segue o padrão Dimensional (Star Schema).
 
+Este documento detalha cada tabela, coluna e a lógica de transformação (ETL) utilizada para popular a Camada Gold (Data Warehouse), que segue o padrão Dimensional (Star Schema).
 
 ## 2. Tabela de Fato
 
-A tabela fato `FT_VOLTAS_TEMPO_PARADA` é responsável por capturar as métricas de desempenho por volta e de paradas nos boxes. É a granularidade mais fina do modelo.
+A tabela fato `fat_des_volt` é responsável por capturar as métricas de desempenho por volta e de paradas nos boxes. É a granularidade mais fina do modelo.
 
-
-<p align="center"> Tabela 1 - Tabela Fato FT_VOLTAS_TEMPO_PARADA</p>
+### Tabela 1 - Tabela Fato fat_des_volt
 
 | Coluna | Tipo SQL | Chave | Descrição | Origem (Silver) | Lógica de População (ETL Silver -> Gold) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `srk_tempo_volta` | `BIGSERIAL` | **PK** | Chave sub-rogada (PK) da tabela de fato. | (Gerada) | Gerada automaticamente pelo PostgreSQL. |
-| `srk_piloto` | `INTEGER` | **FK** | Chave sub-rogada para a dimensão Piloto. | `id_piloto` | JOIN com `DM_PILOTO` (usando `id_piloto` da Silver = `chave_piloto_origem` da Gold). |
-| `srk_equipe` | `INTEGER` | **FK** | Chave sub-rogada para a dimensão Equipe. | `id_equipe` | JOIN com `DM_EQUIPE` (usando `id_equipe` como Business Key). |
-| `srk_corrida` | `INTEGER` | **FK** | Chave sub-rogada para a dimensão Corrida. | `id_corrida` | JOIN com `DM_CORRIDA` (usando `id_corrida` como Business Key). |
-| `srk_status` | `INTEGER` | **FK** | Chave sub-rogada para a dimensão Status. | `id_status` | JOIN com `DM_STATUS` (usando `id_status` como Business Key). |
-| `volta` | `INTEGER` | | Número da volta do circuito. | `volta` | Direto da Silver, com CAST para `IntegerType`. Registros onde `volta` é NULL são FILTRADOS no ETL. |
-| `posicao_na_volta` | `INTEGER` | | Posição do piloto na volta. | `posicao_na_volta` | CAST para `IntegerType`. |
-| `tempo_volta_ms` | `INTEGER` | | Tempo total da volta em milissegundos. | `tempo_volta_ms` | Direto da Silver, com CAST para `IntegerType`. Registros onde `tempo_volta_ms` é NULL são FILTRADOS no ETL. |
-| `duracao_parada_seg` | `DECIMAL(10, 3)` | | Duração da parada nos boxes em segundos. | `duracao_parada_seg` | CAST para `DecimalType(10, 3)`. |
+|--------|----------|-------|-----------|-----------------|------------------------------------------|
+| srk_tmp_volt | BIGSERIAL | PK | Chave sub-rogada (PK) da tabela de fato. | (Gerada) | Gerada automaticamente pelo PostgreSQL. |
+| srk_pil | INTEGER | FK | Chave sub-rogada para a dimensão Piloto. | id_piloto | JOIN com dim_pil (usando id_piloto da Silver = chv_pil_org da Gold). |
+| srk_eqp | INTEGER | FK | Chave sub-rogada para a dimensão Equipe. | id_equipe | JOIN com dim_eqp (usando id_equipe como Business Key). |
+| srk_cor | INTEGER | FK | Chave sub-rogada para a dimensão Corrida. | id_corrida | JOIN com dim_cor (usando id_corrida como Business Key). |
+| srk_sts | INTEGER | FK | Chave sub-rogada para a dimensão Status. | id_status | JOIN com dim_sts (usando id_status como Business Key). |
+| volt | INTEGER |  | Número da volta do circuito. | volta | Direto da Silver, com CAST para IntegerType. Registros onde volt é NULL são FILTRADOS no ETL. |
+| pos_volt | INTEGER |  | Posição do piloto na volta. | posicao_na_volta | CAST para IntegerType. |
+| tmp_volt_ms | INTEGER |  | Tempo total da volta em milissegundos. | tempo_volta_ms | Direto da Silver, com CAST para IntegerType. Registros onde tmp_volt_ms é NULL são FILTRADOS no ETL. |
+| dur_par_seg | DECIMAL(10, 3) |  | Duração da parada nos boxes em segundos. | duracao_parada_seg | CAST para DecimalType(10, 3). |
+| pnt_pil | DECIMAL(10, 1) |  | Pontos obtidos pelo piloto na corrida. | pontos | Agregado da Silver (tabela results). DEFAULT 0. |
+| vit_pil | INTEGER |  | Indicador de vitória (1 ou 0). | posicao_final | Lógica condicional (e.g., CASE WHEN posicao_final = 1 THEN 1 ELSE 0 END). DEFAULT 0. |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
-
-
+**Fonte:** Autoria de [Fernando Carrijo](https://github.com/show-dawn), [Júlio Cezar](https://github.com/Julio1099), [Kaleb Macedo](https://github.com/kalebmacedo) e [Othavio Bolzan](https://github.com/bolzanMGB)
 
 ## 3. Dimensões
 
-### 3.1. Dimensão: DM_PILOTO
+### 3.1. Dimensão: dim_pil
 
 Armazena atributos estáticos sobre os pilotos.
 
-<p align="center"> Tabela 2 - Tabela dimensão DM_PILOTO</p>
-
+#### Tabela 2 - Tabela dimensão dim_pil
 
 | Coluna | Tipo SQL | Chave | Descrição | Origem (Silver) | Lógica de População (ETL Silver -> Gold) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `srk_piloto` | `SERIAL` | **PK** | Chave sub-rogada da Dimensão. | (Gerada) | Gerada automaticamente pelo PostgreSQL. |
-| `chave_piloto_origem` | `INTEGER` | **BK** | Chave de Negócio. ID do piloto na origem. | `id_piloto` | Renomeado de `id_piloto` para `chave_piloto_origem` e selecionado como DISTINCT. |
-| `primeiro_nome` | `VARCHAR(255)` | | Primeiro nome do piloto. | `primeiro_nome_piloto` | Alias. Unicidade garantida por `chave_piloto_origem`. |
-| `sobrenome` | `VARCHAR(255)` | | Sobrenome do piloto. | `sobrenome_piloto` | Alias. Unicidade garantida por `chave_piloto_origem`. |
-| `nome_completo` | `VARCHAR(510)` | | Nome e sobrenome combinados. | - | Coluna GERADA (Calculated Column) no DDL do PostgreSQL: `(primeiro_nome || ' ' || sobrenome) STORED`. |
+|--------|----------|-------|-----------|-----------------|------------------------------------------|
+| srk_pil | SERIAL | PK | Chave sub-rogada da Dimensão. | (Gerada) | Gerada automaticamente pelo PostgreSQL. |
+| chv_pil_org | INTEGER | BK | Chave de Negócio. ID do piloto na origem. | id_piloto | Renomeado de id_piloto para chv_pil_org e selecionado como DISTINCT. |
+| prim_nom | VARCHAR(255) |  | Primeiro nome do piloto. | primeiro_nome_piloto | Alias. Unicidade garantida por chv_pil_org. |
+| sob_nom | VARCHAR(255) |  | Sobrenome do piloto. | sobrenome_piloto | Alias. Unicidade garantida por chv_pil_org. |
+| nom_com | VARCHAR(510) |  | Nome e sobrenome combinados. | - | Coluna GERADA (Calculated Column) no DDL do PostgreSQL: `(prim_nom \|\| ' ' \|\| sob_nom)` |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+**Fonte:** Autoria de [Fernando Carrijo](https://github.com/show-dawn), [Júlio Cezar](https://github.com/Julio1099), [Kaleb Macedo](https://github.com/kalebmacedo) e [Othavio Bolzan](https://github.com/bolzanMGB)
 
-
----
-
-### 2.2. Dimensão: DM_EQUIPE
+### 3.2. Dimensão: dim_eqp
 
 Armazena atributos estáticos sobre as equipes/construtoras.
 
-<p align="center"> Tabela 3 - Tabela dimensão DM_EQUIPE</p>
+#### Tabela 3 - Tabela dimensão dim_eqp
 
 | Coluna | Tipo SQL | Chave | Descrição | Origem (Silver) | Lógica de População (ETL Silver -> Gold) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `srk_equipe` | `SERIAL` | **PK** | Chave sub-rogada da Dimensão. | (Gerada) | Gerada automaticamente pelo PostgreSQL. |
-| `chave_equipe_origem` | `INTEGER` | **BK** | Chave de Negócio. ID da equipe na origem. | `id_equipe` | Renomeado de `id_equipe` para `chave_equipe_origem` e selecionado como DISTINCT. |
-| `nome_equipe` | `VARCHAR(255)` | | Nome oficial da equipe. | `nome_equipe` | Direto da Silver. Unicidade garantida por `chave_equipe_origem`. |
+|--------|----------|-------|-----------|-----------------|------------------------------------------|
+| srk_eqp | SERIAL | PK | Chave sub-rogada da Dimensão. | (Gerada) | Gerada automaticamente pelo PostgreSQL. |
+| chv_eqp_org | INTEGER | BK | Chave de Negócio. ID da equipe na origem. | id_equipe | Renomeado de id_equipe para chv_eqp_org e selecionado como DISTINCT. |
+| nom_eqp | VARCHAR(255) |  | Nome oficial da equipe. | nome_equipe | Direto da Silver. Unicidade garantida por chv_eqp_org. |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+**Fonte:** Autoria de [Fernando Carrijo](https://github.com/show-dawn), [Júlio Cezar](https://github.com/Julio1099), [Kaleb Macedo](https://github.com/kalebmacedo) e [Othavio Bolzan](https://github.com/bolzanMGB)
 
-
---- 
-
-### 2.3. Dimensão: DM_CORRIDA
+### 3.3. Dimensão: dim_cor
 
 Armazena atributos estáticos sobre as corridas.
 
-<p align="center"> Tabela 4 - Tabela dimensão DM_CORRIDA</p>
+#### Tabela 4 - Tabela dimensão dim_cor
 
 | Coluna | Tipo SQL | Chave | Descrição | Origem (Silver) | Lógica de População (ETL Silver -> Gold) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `srk_corrida` | `SERIAL` | **PK** | Chave sub-rogada da Dimensão. | (Gerada) | Gerada automaticamente pelo PostgreSQL. |
-| `chave_corrida_origem` | `INTEGER` | **BK** | Chave de Negócio. ID da corrida na origem. | `id_corrida` | Renomeado de `id_corrida` para `chave_corrida_origem` e selecionado como DISTINCT. |
-| `ano` | `INTEGER` | | Ano da temporada. | `ano` | Direto da Silver. |
-| `rodada` | `INTEGER` | | Número da rodada no calendário. | `rodada` | Direto da Silver. |
-| `nome_corrida` | `VARCHAR(255)` | | Nome do Grande Prêmio. | `nome_corrida` | Direto da Silver. |
+|--------|----------|-------|-----------|-----------------|------------------------------------------|
+| srk_cor | SERIAL | PK | Chave sub-rogada da Dimensão. | (Gerada) | Gerada automaticamente pelo PostgreSQL. |
+| chv_cor_org | INTEGER | BK | Chave de Negócio. ID da corrida na origem. | id_corrida | Renomeado de id_corrida para chv_cor_org e selecionado como DISTINCT. |
+| ano | INTEGER |  | Ano da temporada. | ano | Direto da Silver. |
+| rod | INTEGER |  | Número da rodada no calendário. | rodada | Alias de rodada. |
+| nom_cor | VARCHAR(255) |  | Nome do Grande Prêmio. | nome_corrida | Alias de nome_corrida. |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+**Fonte:** Autoria de [Fernando Carrijo](https://github.com/show-dawn), [Júlio Cezar](https://github.com/Julio1099), [Kaleb Macedo](https://github.com/kalebmacedo) e [Othavio Bolzan](https://github.com/bolzanMGB)
 
-
----
-
-### 2.4. Dimensão: DM_STATUS
+### 3.4. Dimensão: dim_sts
 
 Armazena atributos sobre o status final do piloto.
 
-<p align="center"> Tabela 5 - Tabela dimensão DM_STATUS</p>
+#### Tabela 5 - Tabela dimensão dim_sts
 
 | Coluna | Tipo SQL | Chave | Descrição | Origem (Silver) | Lógica de População (ETL Silver -> Gold) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `srk_status` | `SERIAL` | **PK** | Chave sub-rogada da Dimensão. | (Gerada) | Gerada automaticamente pelo PostgreSQL. |
-| `chave_status_origem` | `INTEGER` | **BK** | Chave de Negócio. ID do status na origem. | `id_status` | Renomeado de `id_status` para `chave_status_origem` e selecionado como DISTINCT. |
-| `descricao_status` | `VARCHAR(255)` | | Descrição textual do status (e.g., Finished, Accident). | `descricao_status` | Direto da Silver. |
+|--------|----------|-------|-----------|-----------------|------------------------------------------|
+| srk_sts | SERIAL | PK | Chave sub-rogada da Dimensão. | (Gerada) | Gerada automaticamente pelo PostgreSQL. |
+| chv_sts_org | INTEGER | BK | Chave de Negócio. ID do status na origem. | id_status | Renomeado de id_status para chv_sts_org e selecionado como DISTINCT. |
+| des_sts | VARCHAR(255) |  | Descrição textual do status (e.g., Finished, Accident). | descricao_status | Alias de descricao_status. |
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>. <a href="https://github.com/Julio1099"> Júlio Cezar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
+**Fonte:** Autoria de [Fernando Carrijo](https://github.com/show-dawn), [Júlio Cezar](https://github.com/Julio1099), [Kaleb Macedo](https://github.com/kalebmacedo) e [Othavio Bolzan](https://github.com/bolzanMGB)
 
 ## 4. Gráfico do DLD
 
-<p align="center"><b>Figura 1</b> – <a href="assets/graficoDLD.png">DLD da Camada Gold</a></p>
-
 ![DERgold](assets/graficoDLD.png)
 
-<p align="center"><b>Fonte: </b>Autoria de <a href="https://github.com/show-dawn"> Fernando Carrijo</a>, <a href="https://github.com/Julio1099"> Júlio Cesar </a>, <a href="https://github.com/kalebmacedo"> Kaleb Macedo</a> e <a href="https://github.com/bolzanMGB"> Othavio Bolzan</a></p>
-
-
-
+**Fonte:** Autoria de [Fernando Carrijo](https://github.com/show-dawn), [Júlio Cesar](https://github.com/Julio1099), [Kaleb Macedo](https://github.com/kalebmacedo) e [Othavio Bolzan](https://github.com/bolzanMGB)
 
 ## Histórico de versão
 
@@ -118,4 +101,4 @@ Armazena atributos sobre o status final do piloto.
 | 29/10/2025 | **`1.0`**      | Ajuste para representação de tabela única | [Júlio Cesar](https://github.com/Julio1099) | [Kaleb Macedo](https://github.com/kalebmacedo) |
 | 31/10/2025 | **`1.1`** | Refatorização da documentação | [Othavio Bolzan](https://github.com/bolzanMGB) | [Kaleb Macedo](https://github.com/kalebmacedo) |
 | 14/11/2025 | **`1.2`** | Adição do Gráfico do DLD | [Kaleb Macedo](https://github.com/kalebmacedo) |  |
-
+| 16/11/2025 | `1.3` | Sincronização do MER com o DDL da Camada Gold. | [Júlio Cesar](https://github.com/Julio1099) |  [Othavio Bolzan](https://github.com/bolzanMGB) |
