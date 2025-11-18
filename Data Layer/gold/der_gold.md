@@ -10,14 +10,16 @@ A Camada Gold agrega métricas e dimensões já tratadas, otimizadas para consum
 
 ```mermaid
 graph BT
-    %% --- Estilização para parecer tabelas ---
-    classDef table fill:#fff,stroke:#333,stroke-width:2px,align:left;
-    classDef relation fill:#e0e0e0,stroke:#333,stroke-width:1px,shape:diamond;
+    %% --- Estilização para ALTO CONTRASTE ---
+    %% Adicionei color:#000 para forçar texto preto no fundo branco
+    classDef table fill:#fff,stroke:#333,stroke-width:2px,align:left,color:#000;
+    classDef relation fill:#e0e0e0,stroke:#333,stroke-width:1px,shape:diamond,color:#000;
 
     %% --- Dimensões (Top Layer) ---
-    
     subgraph Dimensões
         direction LR
+        style Dimensões fill:transparent,stroke:#fff,stroke-width:1px,color:#fff,stroke-dasharray: 5 5
+        
         DIM_PIL["<b>dim_pil</b>
         -------------------
         PK srk_pil
@@ -48,14 +50,12 @@ graph BT
     end
 
     %% --- Relacionamentos (Losangos) ---
-    
     REL_PIL{realiza}:::relation
     REL_EQP{participa}:::relation
     REL_COR{ocorre_em}:::relation
     REL_STS{registra}:::relation
 
     %% --- Tabela Fato (Bottom Layer) ---
-
     FAT["<b>fat_des_volt</b>
     -------------------
     PK srk_des_volt
@@ -71,20 +71,15 @@ graph BT
     vit_pil"]:::table
 
     %% --- Conexões com Cardinalidade ---
-    
-    %% Piloto (1) -- realiza --> (N) Fato
     DIM_PIL ---|1| REL_PIL
     REL_PIL -->|N| FAT
 
-    %% Equipe (1) -- participa --> (N) Fato
     DIM_EQP ---|1| REL_EQP
     REL_EQP -->|N| FAT
 
-    %% Corrida (1) -- ocorre_em --> (N) Fato
     DIM_COR ---|1| REL_COR
     REL_COR -->|N| FAT
 
-    %% Status (1) -- registra --> (N) Fato
     DIM_STS ---|1| REL_STS
     REL_STS -->|N| FAT
 ```
