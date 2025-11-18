@@ -1,5 +1,6 @@
 # Ignora a pasta Data_Layer (underline)
 Data_Layer/
+Data_Layer
 
 # Ignora a pasta Data (com ou sem espaço)
 data/
@@ -16,5 +17,10 @@ __pycache__/
 
 # Ignora pastas de logs
 *.log
+logs
 
 .env
+
+pg_airflow_data/
+
+dags/sql/

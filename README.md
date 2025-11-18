@@ -146,6 +146,9 @@ formula1-analytics/
 * **Mermaid / SQL** – modelagem conceitual, lógica e física do banco de dados.
 
 
+## 6. DLD em Mermaid
+
+O diagrama lógico usado no BR Modelo pode ser gerado automaticamente a partir do arquivo `docs/dld_mermaid.md`. Copie o bloco `erDiagram` para o [Mermaid Live Editor](https://mermaid.live) (ou outra IDE Mermaid) e exporte o SVG/PNG desejado para anexar ao relatório ou slides.
 
 
 ## Integrantes do Grupo

@@ -1,4 +1,22 @@
 services:
+  # Base de dados de metadados do Airflow
+  postgres:
+    image: postgres:13-alpine
+    container_name: airflow_postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      # CORRIGIDO: Aponta para a pasta na raiz do projeto
+      - ../pg_airflow_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Base de dados do Data Warehouse
   db:
     image: postgres:13
     container_name: f1_postgres_db
@@ -10,8 +28,25 @@ services:
       POSTGRES_PASSWORD: "1234"
       POSTGRES_DB: f1database
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data # Volume nomeado (global)
 
+  # Interface Web para o Data Warehouse (pgAdmin) 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: f1_pgadmin_web
+    depends_on:
+      - db
+    ports:
+      - "5050:80" # Porta para acesso: http://localhost:5050
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 1234 
+      PGADMIN_LISTEN_PORT: 80
+    volumes:
+      - pgdata-pgadmin:/var/lib/pgadmin
+    restart: always
+
+  # Serviço PySpark 
   spark-etl:
     build:
       context: ..
@@ -28,39 +63,74 @@ services:
     volumes:
       - ../Data Layer/raw/dados_originais:/home/jovyan/work/data
       - ../Data Layer/silver/ddl_silver.sql:/home/jovyan/work/ddl_silver.sql
+      - ../Data Layer/gold/ddl_gold.sql:/home/jovyan/work/ddl_gold.sql
+      - ../Transformer/etl_raw_to_silver.ipynb:/home/jovyan/work/etl_raw_to_silver.ipynb
+      - ../Transformer/etl_silver_to_gold.ipynb:/home/jovyan/work/etl_silver_to_gold.ipynb
+    command: ["sleep", "infinity"]
 
-    command: >
-      sh -c "
-        echo 'Aguardando o Postgres iniciar...';
-        
-        export PGHOST=$$DB_HOST 
-        export PGUSER=$$DB_USER 
-        export PGPASSWORD=$$DB_PASSWORD 
-        export PGDATABASE=$$DB_NAME;
-        
-        until psql -c 'SELECT 1'; do
-          >&2 echo 'Postgres indisponível - aguardando 1s';
-          sleep 1;
-        done;
-        
-        >&2 echo 'Postgres pronto! Executando DDL (ddl_silver.sql)...';
-        psql -f ddl_silver.sql;
-        
-        >&2 echo 'DDL executado. Iniciando o job ETL (notebook)...';
-        jupyter nbconvert --to script etl_raw_to_silver.ipynb && spark-submit etl_raw_to_silver.py
-      "
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: f1_pgadmin
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
-      PGADMIN_DEFAULT_PASSWORD: "admin"
-    ports:
-      - "5050:80"
+  # Serviço Webserver do Airflow
+  airflow-webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    container_name: airflow_webserver
     depends_on:
-      - db
+      postgres:
+        condition: service_healthy
+    ports:
+      # CORRIGIDO: A porta interna é 8080, não 8888
+      - "8080:8080"
+    environment:
+      &airflow_common_env
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
+      AIRFLOW__WEBSERVER__SECRET_KEY: "seu_super_segredo_aqui_troque_depois"
+    volumes:
+      - ../dags:/opt/airflow/dags 
+      # CORRIGIDO: Aponta para a pasta na raiz do projeto
+      - ../logs:/opt/airflow/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../Data Layer/silver/ddl_silver.sql:/opt/airflow/dags/sql/ddl_silver.sql
+      - ../Data Layer/gold/ddl_gold.sql:/opt/airflow/dags/sql/ddl_gold.sql
+    command: ["webserver"]
+    restart: always
+    user: root
+
+  # Serviço Scheduler do Airflow
+  airflow-scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    container_name: airflow_scheduler
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment: *airflow_common_env
+    volumes:
+      - ../dags:/opt/airflow/dags 
+      # CORRIGIDO: Aponta para a pasta na raiz do projeto
+      - ../logs:/opt/airflow/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../Data Layer/silver/ddl_silver.sql:/opt/airflow/dags/sql/ddl_silver.sql
+      - ../Data Layer/gold/ddl_gold.sql:/opt/airflow/dags/sql/ddl_gold.sql
+    command: ["scheduler"]
+    restart: always
+    user: root
+
+  # Serviço de inicialização do Airflow
+  airflow-init:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    container_name: airflow_init
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment: *airflow_common_env
+    entrypoint: /bin/bash
+    command: -c "airflow db upgrade && airflow users create --role Admin --username admin --email admin@example.com --firstname Admin --lastname Admin --password admin"
+    restart: on-failure
 
 volumes:
-  pgdata:
+  pgdata: # Volume do banco f1_postgres_db
+  pgdata-pgadmin:
