@@ -90,7 +90,65 @@ Armazena atributos sobre o status final do piloto.
 
 ## 4. Gráfico do DLD
 
-![DERgold](assets/graficoDLD.png)
+```mermaid
+erDiagram
+    %% Configuração de Estilo
+    %% O Mermaid renderiza isso como um esquema de banco de dados
+
+    %% --- Tabela Fato ---
+    fat_des_volt {
+        BIGSERIAL srk_tmp_volt PK
+        INTEGER srk_pil FK
+        INTEGER srk_eqp FK
+        INTEGER srk_cor FK
+        INTEGER srk_sts FK
+        INTEGER volt
+        INTEGER pos_volt
+        INTEGER tmp_volt_ms
+        DECIMAL(10_3) dur_par_seg
+        DECIMAL(10_1) pnt_pil
+        INTEGER vit_pil
+    }
+
+    %% --- Dimensão Piloto ---
+    dim_pil {
+        SERIAL srk_pil PK
+        INTEGER chv_pil_org UK "Business Key"
+        VARCHAR(255) prim_nom
+        VARCHAR(255) sob_nom
+        VARCHAR(510) nom_com "Calculada"
+    }
+
+    %% --- Dimensão Equipe ---
+    dim_eqp {
+        SERIAL srk_eqp PK
+        INTEGER chv_eqp_org UK "Business Key"
+        VARCHAR(255) nom_eqp
+    }
+
+    %% --- Dimensão Corrida ---
+    dim_cor {
+        SERIAL srk_cor PK
+        INTEGER chv_cor_org UK "Business Key"
+        INTEGER ano
+        INTEGER rod
+        VARCHAR(255) nom_cor
+    }
+
+    %% --- Dimensão Status ---
+    dim_sts {
+        SERIAL srk_sts PK
+        INTEGER chv_sts_org UK "Business Key"
+        VARCHAR(255) des_sts
+    }
+
+    %% --- Relacionamentos (1:N) ---
+    %% Uma dimensão tem muitos registros na fato
+    dim_pil ||--o{ fat_des_volt : "FK_srk_pil"
+    dim_eqp ||--o{ fat_des_volt : "FK_srk_eqp"
+    dim_cor ||--o{ fat_des_volt : "FK_srk_cor"
+    dim_sts ||--o{ fat_des_volt : "FK_srk_sts"
+```
 
 **Fonte:** Autoria de [Fernando Carrijo](https://github.com/show-dawn), [Júlio Cesar](https://github.com/Julio1099), [Kaleb Macedo](https://github.com/kalebmacedo) e [Othavio Bolzan](https://github.com/bolzanMGB)
 
