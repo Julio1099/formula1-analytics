@@ -5,11 +5,11 @@ Este projeto organiza e analisa dados da Fórmula 1 usando arquitetura Medallion
 ## 🏎️ Formula 1 Analytics
 
 <div align="center">
-  <img src="https://media.giphy.com/media/26BRrXjoHA8m9sHD2/giphy.gif" alt="Formula 1 Car Racing" width="600"/>
+  <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGVsZm1sbzJhZTlkdjBzY2wzeTlmMjBwb2t0Y2txZmFjZmwyMGZvNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/342Zsv5S4W8XC/giphy.gif" alt="Formula 1 Car Racing" width="600"/>
 </div>
 
 <p align="center">
-  <em>Análise completa de dados da Fórmula 1 com arquitetura Medallion</em>
+  <em></em>
 </p>
 
 
@@ -215,3 +215,4 @@ O diagrama lógico usado no BR Modelo pode ser gerado automaticamente a partir d
 | :----: | ---------- | --------------------------------------------------- | ----------------------------------------------- | ------- |
 |  `1.0` | 28/09/2025 | Criação do README                                   | [Júlio Cezar](https://github.com/Julio1099) |   [Othavio Bolzan](https://github.com/bolzanMGB)  |
 |  `2.0` | 06/10/2025 | Reformulação do README                                   | [Othavio Bolzan](https://github.com/bolzanMGB) |         |
+|  `2.1` | 28/11/2025 | Adicionando o GIF e algumas melhorias no README                                  | [Kaleb Macedo](https://github.com/kalebmacedo) |         |
