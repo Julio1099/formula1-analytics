@@ -1,0 +1,81 @@
+name: F1 Contribution Animation
+
+on:
+  # Run daily at midnight UTC
+  schedule:
+    - cron: "0 0 * * *"
+  # Run on push to main/master
+  push:
+    branches:
+      - main
+      - master
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  generate-animation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate F1 Snake Animation (Light Theme)
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/f1-contribution-animation.svg
+
+      - name: Generate F1 Snake Animation (Dark Theme)
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/f1-contribution-animation-dark.svg?palette=github-dark
+
+      - name: Apply F1 Theme Customization
+        run: |
+          # ========================================
+          # F1 Theme Colors:
+          # - Primary Red: #E10600 (F1 Official Red)
+          # - Secondary: #15151E (Dark Gray/Black)
+          # - Accent: #FF1801 (Bright Racing Red)
+          # ========================================
+          
+          # Light theme SVG customization
+          if [ -f dist/f1-contribution-animation.svg ]; then
+            # Change snake/car body color to F1 Red
+            sed -i 's/fill="#[0-9a-fA-F]\{6\}" class="snake/fill="#E10600" class="snake/g' dist/f1-contribution-animation.svg
+            
+            # Alternative pattern matching for different SVG structures
+            sed -i 's/class="snake" fill="#[0-9a-fA-F]\{6\}"/class="snake" fill="#E10600"/g' dist/f1-contribution-animation.svg
+            
+            echo "✅ Light theme SVG customized with F1 colors"
+          fi
+          
+          # Dark theme SVG customization
+          if [ -f dist/f1-contribution-animation-dark.svg ]; then
+            # Change snake/car body color to F1 Red for dark theme
+            sed -i 's/fill="#[0-9a-fA-F]\{6\}" class="snake/fill="#FF1801" class="snake/g' dist/f1-contribution-animation-dark.svg
+            
+            # Alternative pattern matching for different SVG structures
+            sed -i 's/class="snake" fill="#[0-9a-fA-F]\{6\}"/class="snake" fill="#FF1801"/g' dist/f1-contribution-animation-dark.svg
+            
+            echo "✅ Dark theme SVG customized with F1 colors"
+          fi
+          
+          # List generated files
+          echo "📁 Generated files:"
+          ls -la dist/
+
+      - name: Push to output branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
