@@ -2,15 +2,15 @@
 
 Este projeto organiza e analisa dados da Fórmula 1 usando arquitetura Medallion (Bronze → Silver → Gold) com PySpark, Python e Jupyter Notebook. Inclui processos de ETL, dashboards interativos e análises históricas de pilotos, construtores e corridas. Desenvolvido como projeto da disciplina FGA0060 – Sistemas de Banco de Dados 2, do curso de Engenharia de Software da Universidade de Brasília (UnB).
 
-## 🏎️ F1 Contribution Racer
+## 🏎️ Formula 1 Analytics
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Julio1099/formula1-analytics/output/f1-contribution-animation-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Julio1099/formula1-analytics/output/f1-contribution-animation.svg">
-  <img alt="F1 Contribution Animation" src="https://raw.githubusercontent.com/Julio1099/formula1-analytics/output/f1-contribution-animation.svg">
-</picture>
+<div align="center">
+  <img src="https://media.giphy.com/media/26BRrXjoHA8m9sHD2/giphy.gif" alt="Formula 1 Car Racing" width="600"/>
+</div>
 
-> 🏁 *A animação acima mostra um carro de F1 percorrendo as contribuições do projeto. Atualizada diariamente via GitHub Actions.*
+<p align="center">
+  <em>Análise completa de dados da Fórmula 1 com arquitetura Medallion</em>
+</p>
 
 
 
