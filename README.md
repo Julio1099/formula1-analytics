@@ -5,7 +5,7 @@ Este projeto organiza e analisa dados da Fórmula 1 usando arquitetura Medallion
 ## 🏎️ Formula 1 Analytics
 
 <div align="center">
-  <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGVsZm1sbzJhZTlkdjBzY2wzeTlmMjBwb2t0Y2txZmFjZmwyMGZvNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/342Zsv5S4W8XC/giphy.gif" alt="Formula 1 Car Racing" width="600"/>
+  <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3l4OWIxbTNjeG82NjRodHM2NWczaWd4MHBxcXM4OGw4ZGNka2Y5MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Vi6TA5a01GhLVndS7i/giphy.gif" alt="Formula 1 Car Racing" width="600"/>
 </div>
 
 <p align="center">
