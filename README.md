@@ -88,45 +88,37 @@ docker exec -it medallion-db psql -U $POSTGRES_USER -d $POSTGRES_DB -c "\dt silv
 ##  3. Estrutura do repositório
 ```
 formula1-analytics/
+├─ dags
+|   ├─ airflowignore
+|   └─ formula1_pipeline_dag.py
 ├─ DataLayer/
 │  ├─ raw/                                # Camada Bronze (dados brutos)
-│  │  ├─ dados_originais/                 # Dados CSV originais
-│  │  ├─ Analise_PySpark2.ipynb           # Notebook de análise exploratória inicial
-│  │  └─ dicionario_bronze.md             # Dicionário de dados Bronze
+│  │  ├─ dados_originais/                 
+│  │  ├─ analytics_raw.ipynb           
+│  │  └─ dicionario_raw.md             
 │  │
-│  ├─ silver/                             # Camada Silver (dados tratados)
-│  │  ├─ dados_limpos/                    # Dados limpos e transformados
-│  │  ├─ models/
-│  │  │  ├─ ddl_silver.sql
-│  │  │  ├─ der_silver.md
-│  │  │  ├─ dld_silver.md
-│  │  │  └─ mer_silver.md
-│  │  └─ dicionario_silver.md
+│  ├─ silver/                             # Camada Silver (dados tratados)                 
+│  │  ├─ dicionario_silver.md
+|  |  ├─ ddl_silver.sql
+|  |  ├─ analytics.ipynb
+|  |  └─ mer_der_dld.pdf
 │  │
 │  └─ gold/                               # Camada Gold (dados analíticos)
-│     ├─ models/
-│     │  ├─ ddl_gold.sql
-│     │  ├─ der_gold.md
-│     │  ├─ dld_gold.md
-│     │  └─ mer_gold.md
-│     └─ dicionario_gold.md              
-│
-├─ Notebooks/
-│  ├─ Analise_PySpark.ipynb
-│  ├─ combined_overview.py
-│  └─ spark_bootstrap.py
+│     ├─ mer_der_dld.pdf
+|     ├─ consultas.sql
+|     ├─ ddl_gold.sql
+|     └─ mnemonicos.pdf           
 │
 ├─ Transformer/                           # Scripts de transformação/ETL
-│  ├─ etl_raw_to_silver.py
-│  └─ etl_silver_to_gold.py
+│  ├─ etl_raw_to_silver.ipynb
+│  └─ etl_silver_to_gold.ipynb
 │
 ├─ docker/                                # Docker
 │  ├─ docker-compose.yml
-│  └─ initdb/
-│     └─ 00_create_schemas.sql
+│  ├─Dockerfile
+│  └─Dockerfile.airflow
 │
-├─ README.md
-└─ venv/
+└─ README.md
 
 ```
 
