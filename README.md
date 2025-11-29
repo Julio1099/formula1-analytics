@@ -147,6 +147,9 @@ formula1-analytics/
 * **Jupyter Notebook** – análise exploratória, desenvolvimento e visualização interativa;
 * **SQL** – modelagem conceitual, lógica e física do banco de dados.
 
+## 6. Power BI
+https://app.powerbi.com/view?r=eyJrIjoiN2ZjMGE1OWMtNWI0NC00N2NlLTgwYjYtN2I4YzNiZDVlM2FiIiwidCI6ImVjMzU5YmExLTYzMGItNGQyYi1iODMzLWM4ZTZkNDhmODA1OSJ9
+
 
 ## Integrantes do Grupo
 
