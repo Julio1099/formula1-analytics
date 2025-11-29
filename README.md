@@ -146,9 +146,20 @@ formula1-analytics/
 * **Docker** – containerização e isolamento dos ambientes;
 * **Jupyter Notebook** – análise exploratória, desenvolvimento e visualização interativa;
 * **SQL** – modelagem conceitual, lógica e física do banco de dados.
+* **PoweBI** – visualização interativa e análise de resultados.
+
 
 ## 6. Power BI
-https://app.powerbi.com/view?r=eyJrIjoiN2ZjMGE1OWMtNWI0NC00N2NlLTgwYjYtN2I4YzNiZDVlM2FiIiwidCI6ImVjMzU5YmExLTYzMGItNGQyYi1iODMzLWM4ZTZkNDhmODA1OSJ9
+
+O dashboard final foi desenvolvido no **Power BI**, com design planejado no **Figma**, e é composto por uma página inicial e outras três páginas analíticas, acessadas por um menu interativo com botões clicáveis no topo. As páginas estão dispostas da seguinte forma:
+
+* **Seasons Winners** — seleção de ano e corrida, exibindo os 3 melhores colocados e suas equipes.
+* **Pace** — seleção de ano e corrida, permitindo analisar o ritmo geral da prova e o ritmo individual dos pilotos.
+* **Pit Stops** — seleção de ano e equipe, mostrando ranking, consistência, evolução do tempo médio e demais métricas de pit stop.
+* **Drivers Comparison** — seleção de dois pilotos, exibindo comparações de pódios, pontuação, DNFs e outras estatísticas.
+
+🔗 [Dashboard no Power BI](https://app.powerbi.com/view?r=eyJrIjoiN2ZjMGE1OWMtNWI0NC00N2NlLTgwYjYtN2I4YzNiZDVlM2FiIiwidCI6ImVjMzU5YmExLTYzMGItNGQyYi1iODMzLWM4ZTZkNDhmODA1OSJ9)
+
 
 
 ## Integrantes do Grupo
@@ -195,14 +206,3 @@ https://app.powerbi.com/view?r=eyJrIjoiN2ZjMGE1OWMtNWI0NC00N2NlLTgwYjYtN2I4YzNiZ
     </tr>
   </tbody>
 </table>
-
-
-
-
-## Histórico de Versões
-
-| Versão | Data       | Descrição                                           | Autor                                           | Revisor |
-| :----: | ---------- | --------------------------------------------------- | ----------------------------------------------- | ------- |
-|  `1.0` | 28/09/2025 | Criação do README                                   | [Júlio Cezar](https://github.com/Julio1099) |   [Othavio Bolzan](https://github.com/bolzanMGB)  |
-|  `2.0` | 06/10/2025 | Reformulação do README                                   | [Othavio Bolzan](https://github.com/bolzanMGB) |         |
-|  `2.1` | 28/11/2025 | Adicionando o GIF e algumas melhorias no README                                  | [Kaleb Macedo](https://github.com/kalebmacedo) |         |
