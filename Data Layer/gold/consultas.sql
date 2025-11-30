@@ -431,3 +431,147 @@ ORDER BY
     CASE WHEN piloto = 'MÉDIA DA EQUIPE' THEN 1 ELSE 2 END ASC,
 --  equipe ASC,
     media_duracao_pit_stop_seg ASC;
+
+-- 9. Histórico de Carreira: Passagens (Stints) por Equipe
+-- Objetivo: Identificar cada período distinto que um piloto esteve em uma equipe.
+-- Solução: Usa Window Functions para detectar mudanças de equipe rodada a rodada ("Gaps and Islands"),
+-- separando casos como "substituições de uma corrida" de "contratos de temporada completa".
+
+WITH DriverTimeline AS (
+    SELECT
+        dp.nom_com AS piloto,
+        de.nom_eqp AS equipe,
+        dc.ano,
+        dc.rod,
+        f.srk_cor
+    FROM
+        gold.fat_des_volt f
+    JOIN
+        gold.dim_pil dp ON f.srk_pil = dp.srk_pil
+    JOIN
+        gold.dim_eqp de ON f.srk_eqp = de.srk_eqp
+    JOIN
+        gold.dim_cor dc ON f.srk_cor = dc.srk_cor
+),
+ChangeDetection AS (
+    SELECT
+        *,
+        LAG(equipe) OVER (PARTITION BY piloto ORDER BY ano, rod) AS equipe_anterior,
+        CASE 
+            WHEN LAG(equipe) OVER (PARTITION BY piloto ORDER BY ano, rod) <> equipe THEN 1 
+            ELSE 0 
+        END AS mudou_equipe
+    FROM
+        DriverTimeline
+),
+StintGrouping AS (
+    SELECT
+        *,
+        SUM(mudou_equipe) OVER (PARTITION BY piloto ORDER BY ano, rod) AS stint_id
+    FROM
+        ChangeDetection
+)
+SELECT
+    piloto,
+    equipe,
+    MIN(ano) AS ano_inicio_passagem,
+    MAX(ano) AS ano_fim_passagem,
+    COUNT(DISTINCT srk_cor) AS corridas_nesta_passagem,
+    CASE 
+        WHEN COUNT(DISTINCT srk_cor) = 1 THEN 'Substituição / One-off'
+        WHEN COUNT(DISTINCT srk_cor) <= 5 THEN 'Curta Duração'
+        ELSE 'Titular'
+    END AS tipo_passagem
+FROM
+    StintGrouping
+GROUP BY
+    piloto,
+    equipe,
+    stint_id 
+ORDER BY
+    piloto ASC,
+    ano_inicio_passagem ASC,
+    MIN(rod) ASC;
+
+-- 10. Análise de Consistência Relativa: O "Metrônomo" (Baseado em Percentil)
+-- Objetivo: Classificar a consistência dos pilotos comparando-os COM SEUS RIVAIS da mesma temporada.
+-- Lógica: Usa PERCENT_RANK para garantir que apenas os 10-15% melhores recebam o título de elite.
+
+WITH FastestLapPerRace AS (
+    SELECT
+        f.srk_cor,
+        MIN(f.tmp_volt_ms) AS fastest_lap_in_race_ms
+    FROM
+        gold.fat_des_volt f
+    JOIN
+        gold.dim_cor dc ON f.srk_cor = dc.srk_cor
+    WHERE
+        dc.ano = 2024  -- <-- Defina a temporada aqui
+        AND f.tmp_volt_ms IS NOT NULL
+        AND f.dur_par_seg = 0.000
+    GROUP BY
+        f.srk_cor
+),
+CleanLaps AS (
+    SELECT
+        f.srk_pil,
+        f.srk_cor,
+        dp.nom_com AS piloto,
+        de.nom_eqp AS equipe,
+        (f.tmp_volt_ms::numeric / flpr.fastest_lap_in_race_ms) AS ritmo_relativo
+    FROM
+        gold.fat_des_volt f
+    JOIN
+        FastestLapPerRace flpr ON f.srk_cor = flpr.srk_cor
+    JOIN
+        gold.dim_pil dp ON f.srk_pil = dp.srk_pil
+    JOIN
+        gold.dim_eqp de ON f.srk_eqp = de.srk_eqp
+    WHERE
+        f.tmp_volt_ms IS NOT NULL
+        AND f.dur_par_seg = 0.000
+        AND (f.tmp_volt_ms::numeric / flpr.fastest_lap_in_race_ms) <= 1.07
+),
+RawStats AS (
+    SELECT
+        piloto,
+        equipe,
+        COUNT(*) AS total_voltas_validas,
+        ROUND(AVG(ritmo_relativo), 4) AS ritmo_medio,
+        STDDEV(ritmo_relativo) * 1000 AS indice_inconsistencia_raw
+    FROM
+        CleanLaps
+    GROUP BY
+        piloto,
+        equipe
+    HAVING
+        COUNT(*) > 100 
+),
+RankedStats AS (
+    SELECT
+        *,
+        PERCENT_RANK() OVER (ORDER BY indice_inconsistencia_raw ASC) as ranking_percentual
+    FROM
+        RawStats
+)
+
+SELECT
+    piloto,
+    equipe,
+    total_voltas_validas,
+    ritmo_medio AS velocidade_media,
+    ROUND(indice_inconsistencia_raw, 2) AS indice_inconsistencia,
+    
+    ROUND((ranking_percentual * 100)::numeric, 1) || '%' AS percentil_ranking,
+
+    CASE 
+        WHEN ranking_percentual <= 0.10 THEN 'Elite'
+        WHEN ranking_percentual <= 0.30 THEN 'Muito Consistente'
+        WHEN ranking_percentual <= 0.70 THEN 'Regular (Média do Grid)'
+        ELSE 'Oscilante / Alto Desgaste (Bottom 30%)'
+    END AS analise_consistencia
+
+FROM
+    RankedStats
+ORDER BY
+    ranking_percentual ASC;

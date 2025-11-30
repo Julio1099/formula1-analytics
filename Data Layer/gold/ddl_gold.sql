@@ -46,7 +46,6 @@ CREATE TABLE IF NOT EXISTS gold.dim_sts (
 
 -- Tabela de Fato: Desempenho por Volta
 CREATE TABLE IF NOT EXISTS gold.fat_des_volt (
-    srk_tmp_volt    BIGSERIAL PRIMARY KEY,
     srk_pil         INTEGER NOT NULL REFERENCES gold.dim_pil(srk_pil),
     srk_eqp         INTEGER NOT NULL REFERENCES gold.dim_eqp(srk_eqp),
     srk_cor         INTEGER NOT NULL REFERENCES gold.dim_cor(srk_cor),
